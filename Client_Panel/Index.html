@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Farmer Marketplace | Home</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50">
+
+   <!-- Navbar -->
+<nav class="bg-white text-green-900 p-4 fixed top-0 left-0 w-full z-50 shadow-md">
+    <div class="container mx-auto flex justify-between items-center">
+        
+        <!-- Logo / Site Name -->
+       <a href="index.html" class="text-3xl font-extrabold tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-green-700 to-green-400 drop-shadow-lg">
+    🌿 Local Farmer Marketplace
+</a>
+
+
+        <!-- Navigation Links -->
+        <div class="hidden md:flex space-x-6 items-center">
+            <a href="index.html" class="hover:text-green-600 transition duration-300">Home</a>
+            <a href="products.html" class="hover:text-green-600 transition duration-300">Products</a>
+            <a href="cart.html" class="hover:text-green-600 transition duration-300">Cart</a>
+
+            <!-- Buttons -->
+            <a href="register.html" class="bg-green-700 text-white px-5 py-2 rounded-full hover:bg-green-600 transition duration-300">
+                Register
+            </a>
+            <a href="login.html" class="bg-green-500 text-white px-5 py-2 rounded-full hover:bg-green-400 transition duration-300">
+                Login
+            </a>
+        </div>
+
+        <!-- Mobile Menu Icon -->
+        <div class="md:hidden">
+            <button id="menuButton" class="text-green-900 focus:outline-none">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+    </div>
+
+   
+</nav>
+
+<!-- Add margin to content so it's not hidden behind the fixed navbar -->
+<div class="pt-20">
+   
+</div>
+
+    <div id="navbar-container"></div>
+
+   <section class="relative w-full h-[75vh] flex items-center justify-center text-center text-white overflow-hidden">
+    <!-- Background Video -->
+   <div class="absolute top-0 left-0 w-full h-full pointer-events-none">
+   <video 
+    class="w-full h-[160%]" 
+    src="video/vegetablemotion.mp4" 
+    controls 
+    autoplay 
+    muted 
+    loop
+>
+</video>
+
+</div>
+
+
+    <!-- Overlay for Transparency Effect -->
+    <div class="absolute top-0 left-0 w-full h-full bg-green-700 bg-opacity-20"></div>
+
+    <!-- Hero Content -->
+    <div class="relative z-10 px-6">
+        <h1 class="text-5xl font-bold">Fresh & Organic Groceries</h1>
+        <p class="mt-4 text-lg">Get the best quality fruits, vegetables, and dairy products.</p>
+        <a href="products.html" class="mt-6 inline-block bg-white text-green-600 font-bold px-6 py-3 rounded-lg hover:bg-gray-200">
+            Shop Now
+        </a>
+    </div>
+</section>
+
+
+
+    <!-- Product Categories -->
+    <section class="container mx-auto py-12 px-6">
+        <h2 class="text-3xl font-bold text-center mb-6">Shop by Category</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div class="bg-white p-6 rounded-lg shadow hover:shadow-2xl transition">
+
+                <img src="images\vegetablesindexpage.jpg" alt="Vegetables" class="w-full rounded">
+                <h3 class="text-lg font-semibold mt-4 text-center">Vegetables</h3>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow hover:shadow-2xl transition">
+
+                <img src="images\fruiteindexpage.jpeg" alt="Fruits" class="w-full rounded">
+                <h3 class="text-lg font-semibold mt-4 text-center">Fruits</h3>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow hover:shadow-2xl transition">
+
+                <img src="images\dairyindexpage.avif" alt="Dairy" class="w-full rounded">
+                <h3 class="text-lg font-semibold mt-4 text-center">Dairy</h3>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow hover:shadow-2xl transition">
+
+                <img src="images\Bakeryindexpage.jpeg" alt="Bakery" class="w-full rounded">
+                <h3 class="text-lg font-semibold mt-4 text-center">Bakery</h3>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="container mx-auto py-12 px-6">
+        <h2 class="text-3xl font-bold text-center mb-6">Featured Products</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+
+            <div class="bg-white p-6 rounded-lg shadow hover:shadow-2xl transition">
+
+                <img src="images\organicapplesindexpage.jpeg" alt="Apples" class="w-full rounded">
+                <h3 class="text-lg font-semibold mt-4">Organic Apples</h3>
+                <p class="text-gray-600">$4.99 per kg</p>
+                <button class="mt-8 w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg">Add to Cart</button>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow hover:shadow-2xl transition">
+
+                <img src="images\carrotsindexpage.jpeg" alt="Carrots" class="w-full rounded">
+                <h3 class="text-lg font-semibold mt-4">Fresh Carrots</h3>
+                <p class="text-gray-600">$3.99 per kg</p>
+                <button class="mt-9 w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg">Add to Cart</button>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow hover:shadow-2xl transition">
+                <img src="images\cheeseindexpage.webp" alt="Cheese" class="w-full rounded">
+                <h3 class="text-lg font-semibold mt-10">Cheese Pack</h3>
+                <p class="text-gray-600">$6.99 per pack</p>
+                <button class="mt-4 w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg">Add to Cart</button>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow hover:shadow-2xl transition">
+                <img src="images\organichoneyindexpage.jpg" alt="Honey" class="w-full rounded">
+                <h3 class="text-lg font-semibold mt-4">Organic Honey</h3>
+                <p class="text-gray-600">$9.99 per jar</p>
+                <button class="mt-4 w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg">Add to Cart</button>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+   <footer class="bg-gradient-to-r from-green-700 to-green-900 text-white py-8 mt-12">
+    <div class="max-w-7xl mx-auto text-center">
+        <h2 class="text-2xl font-bold tracking-wide">Local Farmer Marketplace</h2>
+        <p class="mt-2 text-sm text-gray-300">Connecting farmers and communities — fresh, local, and sustainable.</p>
+        
+        <div class="flex justify-center space-x-6 mt-6">
+            <a href="#" class="text-gray-300 hover:text-white transition duration-300">
+                <i class="fab fa-facebook-f"></i> Facebook
+            </a>
+            <a href="#" class="text-gray-300 hover:text-white transition duration-300">
+                <i class="fab fa-instagram"></i> Instagram
+            </a>
+            <a href="#" class="text-gray-300 hover:text-white transition duration-300">
+                <i class="fab fa-twitter"></i> Twitter
+            </a>
+        </div>
+
+        <hr class="border-gray-600 my-6">
+
+        <p class="text-sm text-gray-400">&copy; 2025 Local Farmer Marketplace. All rights reserved.</p>
+    </div>
+</footer>
+
+<!-- FontAwesome for icons (add this to your HTML head or before closing body tag) -->
+<script src="https://kit.fontawesome.com/your-kit-code.js" crossorigin="anonymous"></script>
+
+
+   
+
+</body>
+</html>
