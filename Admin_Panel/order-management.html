@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 text-gray-800 flex">
+
+    <!-- Sidebar -->
+    <aside id="sidebar"
+        class="w-72 bg-gradient-to-b from-blue-900 to-blue-600 text-white min-h-screen p-6 fixed top-0 left-0 lg:translate-x-0 shadow-lg z-50">
+        <div class="flex items-center justify-between mb-8">
+            <h2 class="text-3xl font-bold tracking-wide">Admin Panel</h2>
+        </div>
+
+        <nav class="space-y-6">
+            <a href="admin-dashboard.html" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-blue-700">
+                <span>📊</span>
+                <span class="text-lg font-medium">Dashboard</span>
+            </a>
+            <a href="manage-products.html" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-blue-700">
+                <span>🛒</span>
+                <span class="text-lg font-medium">Manage Products</span>
+            </a>
+            <a href="manage-users.html" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-blue-700">
+                <span>👥</span>
+                <span class="text-lg font-medium">Manage Users</span>
+            </a>
+            <a href="order-management.html" class="flex items-center space-x-3 p-3 rounded-lg bg-blue-800">
+                <span>📦</span>
+                <span class="text-lg font-medium">Orders</span>
+            </a>
+            <a href="admin-login.html" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-red-600">
+                <span>🚪</span>
+                <span class="text-lg font-medium">Login</span>
+            </a>
+        </nav>
+
+        <div class="absolute bottom-8 left-6 right-6 flex items-center bg-blue-800 p-4 rounded-lg gap-4">
+            <img src="https://via.placeholder.com/50" alt="Admin Avatar"
+                class="rounded-full w-12 h-12 border-2 border-white">
+            <div>
+                <p class="text-white font-medium">Admin Name</p>
+                <p class="text-blue-300 text-sm">admin@example.com</p>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-8 lg:ml-72">
+
+        <!-- Page Title -->
+        <h1 class="text-3xl font-bold mb-6">Order Management</h1>
+
+        <!-- Order Table -->
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-2xl font-bold mb-4">Order List</h2>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead class="bg-blue-600 text-white">
+                        <tr>
+                            <th class="p-3">Order ID</th>
+                            <th class="p-3">User</th>
+                            <th class="p-3">Product</th>
+                            <th class="p-3">Quantity</th>
+                            <th class="p-3">Total ($)</th>
+                            <th class="p-3">Status</th>
+                            <th class="p-3">Update Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="p-3">#1001</td>
+                            <td class="p-3">John Doe</td>
+                            <td class="p-3">Apples</td>
+                            <td class="p-3">5</td>
+                            <td class="p-3">25.00</td>
+                            <td class="p-3 text-green-600 font-medium">Delivered</td>
+                            <td class="p-3">
+                                <select class="p-2 border rounded-lg">
+                                    <option>Pending</option>
+                                    <option>Processing</option>
+                                    <option>Delivered</option>
+                                    <option>Cancelled</option>
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="p-3">#1002</td>
+                            <td class="p-3">Jane Smith</td>
+                            <td class="p-3">Bananas</td>
+                            <td class="p-3">3</td>
+                            <td class="p-3">15.00</td>
+                            <td class="p-3 text-yellow-600 font-medium">Processing</td>
+                            <td class="p-3">
+                                <select class="p-2 border rounded-lg">
+                                    <option>Pending</option>
+                                    <option selected>Processing</option>
+                                    <option>Delivered</option>
+                                    <option>Cancelled</option>
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="p-3">#1003</td>
+                            <td class="p-3">Mark Wilson</td>
+                            <td class="p-3">Milk</td>
+                            <td class="p-3">2</td>
+                            <td class="p-3">10.00</td>
+                            <td class="p-3 text-red-600 font-medium">Cancelled</td>
+                            <td class="p-3">
+                                <select class="p-2 border rounded-lg">
+                                    <option>Pending</option>
+                                    <option>Processing</option>
+                                    <option>Delivered</option>
+                                    <option selected>Cancelled</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            <div class="flex justify-between items-center mt-4">
+                <p class="text-sm">Showing 1 to 3 of 10 entries</p>
+                <div class="flex space-x-2">
+                    <button class="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400">Previous</button>
+                    <button class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">1</button>
+                    <button class="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400">2</button>
+                    <button class="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400">3</button>
+                    <button class="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400">Next</button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+</body>
+
+</html>
