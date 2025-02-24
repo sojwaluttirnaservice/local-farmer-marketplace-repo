@@ -1,0 +1,191 @@
+<!-- This is just for referecne, copy this layout for company pages -->
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title><%= title %></title>
+
+        <!-- Common links -->
+        <%- include("../../common/common-links.ejs")%>
+
+        <!-- Admin common links -->
+        <%- include("../../common/common-admin-links.ejs")%>
+
+        <!-- Company common links -->
+
+        <!-- Common scripts -->
+        <%-include("../../common/common-scripts.ejs")%>
+
+        <!-- Admin common scripts -->
+
+        <%- include("../../common/common-admin-scripts.ejs")%>
+
+        <script
+            src="/javascripts/handlers/products/addPredefinedProductHandler.js"
+            type="module"
+            defer></script>
+    </head>
+    <body>
+        <% if (admin != null && admin !== undefined) { %> <%-
+        include("../../components/navs/admin-navbar.ejs") %> <% } %>
+
+        <main>
+            <section class="page-heading">
+                <h2
+                    class="text-center text-3xl font-extrabold text-gray-800 tracking-wide relative">
+                    <% if (admin != null && admin !== undefined) { %> Add Product<% }else { %> Add
+                    Product <% }%>
+                    <span class="block h-1 w-16 bg-blue-500 mx-auto mt-2 rounded-full"></span>
+                </h2>
+            </section>
+
+            <!-- Section: Form to Add Predefined Product -->
+            <section class="p-4 flex justify-center items-center">
+                <form
+                    class="w-full max-w-lg bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+                    id="add-predefined-product-form"
+                    >
+                    <!-- <h2 class="block text-gray-700 text-2xl font-bold mb-6 text-center">
+                        Add Predefined Product
+                    </h2> -->
+
+                    <!-- Product Name -->
+                    <div class="mb-4">
+                        <label
+                            class="block text-gray-700 text-sm font-bold mb-2"
+                            for="product_name">
+                            Product Name
+                        </label>
+                        <input
+                            class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-md border border-gray-300 p-2 bg-white text-gray-900 placeholder-gray-400 outline-none focus:ring-2"
+                            id="product_name"
+                            name="product_name"
+                            type="text"
+                            placeholder="Enter product name"
+                            required />
+                    </div>
+
+                    <!-- Description -->
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="description">
+                            Description
+                        </label>
+                        <textarea
+                            class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-md border border-gray-300 p-2 bg-white text-gray-900 placeholder-gray-400 outline-none focus:ring-2"
+                            id="description"
+                            name="description"
+                            placeholder="Enter description"></textarea>
+                    </div>
+
+                    <!-- Price per Unit -->
+                    <div class="mb-4">
+                        <label
+                            class="block text-gray-700 text-sm font-bold mb-2"
+                            for="price_per_unit">
+                            Price per Unit
+                        </label>
+                        <input
+                            class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-md border border-gray-300 p-2 bg-white text-gray-900 placeholder-gray-400 outline-none focus:ring-2"
+                            id="price_per_unit"
+                            name="price_per_unit"
+                            type="number"
+                            step="0.01"
+                            placeholder="Enter price per unit"
+                            required />
+                    </div>
+
+                    <!-- Category -->
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="category">
+                            Category
+                        </label>
+                        <select
+                            id="category"
+                            name="category"
+                            class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-md border border-gray-300 p-2 bg-white text-gray-900 placeholder-gray-400 outline-none focus:ring-2"
+                            required>
+                            <option value="">Select Category</option>
+                            <option value="Vegetables">Vegetables</option>
+                            <option value="Fruits">Fruits</option>
+                            <option value="Grains">Grains</option>
+                            <option value="Dairy">Dairy</option>
+                            <option value="Spices">Spices</option>
+                            <option value="Pulses">Pulses</option>
+                            <option value="Others">Others</option>
+                        </select>
+                    </div>
+
+                    <!-- Unit of Measurement -->
+                    <div class="mb-6">
+                        <label
+                            class="block text-gray-700 text-sm font-bold mb-2"
+                            for="unit_of_measurement">
+                            Unit of Measurement
+                        </label>
+                        <select
+                            id="unit_of_measurement"
+                            name="unit_of_measurement"
+                            class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-md border border-gray-300 p-2 bg-white text-gray-900 placeholder-gray-400 outline-none focus:ring-2"
+                            required>
+                            <option value="">Select Unit</option>
+                            <option value="Kilogram">Kilogram</option>
+                            <option value="Gram">Gram</option>
+                            <option value="Dozen">Dozen</option>
+                            <option value="Liter">Liter</option>
+                            <option value="Piece">Piece</option>
+                            <option value="Quintal">Quintal</option>
+                        </select>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="flex items-center justify-center">
+                        <button
+                            type="button"
+                            id='add-predefined-product-btn'
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline"
+                            type="submit">
+                            Add Product
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Section: Predefined Products List Table -->
+            <section class="p-4">
+                <h2 class="text-2xl font-bold mb-4 text-center">Predefined Products List</h2>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white border">
+                        <thead>
+                            <tr class="bg-gray-200">
+                                <th class="py-2 px-4 border-b text-left">ID</th>
+                                <th class="py-2 px-4 border-b text-left">Product Name</th>
+                                <th class="py-2 px-4 border-b text-left">Description</th>
+                                <th class="py-2 px-4 border-b text-left">Price per Unit</th>
+                                <th class="py-2 px-4 border-b text-left">Category</th>
+                                <th class="py-2 px-4 border-b text-left">Unit</th>
+                                <th class="py-2 px-4 border-b text-left">Created At</th>
+                                <th class="py-2 px-4 border-b text-left">Updated At</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Example row; in real implementation, iterate over products -->
+                            <tr>
+                                <td class="py-2 px-4 border-b">1</td>
+                                <td class="py-2 px-4 border-b">Tomato</td>
+                                <td class="py-2 px-4 border-b">Fresh red tomatoes</td>
+                                <td class="py-2 px-4 border-b">20.00</td>
+                                <td class="py-2 px-4 border-b">Vegetables</td>
+                                <td class="py-2 px-4 border-b">Kilogram</td>
+                                <td class="py-2 px-4 border-b">2025-02-01</td>
+                                <td class="py-2 px-4 border-b">2025-02-01</td>
+                            </tr>
+                            <!-- Additional rows will be populated here dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </body>
+</html>
