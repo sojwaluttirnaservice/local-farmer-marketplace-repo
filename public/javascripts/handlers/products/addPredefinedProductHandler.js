@@ -18,7 +18,10 @@ $(() => {
 
             if (success) {
                 toast.success(message)
-                location.reload();
+
+                setTimeout(() => {
+                    location.reload();
+                },400)
             } else {
                 toast.error(message)
             }

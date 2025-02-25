@@ -34,8 +34,9 @@ const adminAuthController = {
         const { username, password, role } = req.body
 
 
+
         if (!username || !password) {
-            return sendResponse(res, 400, false, "Email and password are required");
+            return sendResponse(res, 400, false, "Username and password are required");
         }
 
         const [_admins, _metadata] = await adminModel.getAdminByUsername(username)

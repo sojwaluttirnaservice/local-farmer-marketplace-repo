@@ -5,11 +5,16 @@ const predefinedProductsModel = {
     add: (productData) => {
         let q = `
             INSERT INTO predefined_products (
+
                 product_name,
                 description,
                 price_per_unit,
+                selling_price_per_unit,
+
                 category,
-                unit_of_measurement
+                unit_of_measurement,
+                stock_in_quantity
+                
             ) VALUES (?)
         `;
 
@@ -17,8 +22,10 @@ const predefinedProductsModel = {
             productData.product_name,
             productData.description || '',
             productData.price_per_unit,
+            productData.selling_price_per_unit,
             productData.category,
             productData.unit_of_measurement,
+            productData.stock_in_quantity || 0,
         ];
 
         return db.query(q, [insertArray]);
@@ -32,6 +39,8 @@ const predefinedProductsModel = {
                 product_name,
                 description,
                 price_per_unit,
+                selling_price_per_unit,
+                stock_in_quantity,
                 category,
                 unit_of_measurement,
                 createdAt,
@@ -51,10 +60,14 @@ const predefinedProductsModel = {
                 product_name,
                 description,
                 price_per_unit,
+                selling_price_per_unit,
                 category,
                 unit_of_measurement,
+                stock_in_quantity,
                 createdAt,
-                updatedAt
+                updatedAt,
+                DATE_FORMAT(createdAt, '%d-%m-%Y') AS _createdAt,
+                DATE_FORMAT(updatedAt, '%d-%m-%Y') AS _updatedAt
             FROM predefined_products
             ORDER BY product_name ASC
         `;
@@ -69,8 +82,10 @@ const predefinedProductsModel = {
                 product_name = ?,
                 description = ?,
                 price_per_unit = ?,
+                selling_price_per_unit ?,
                 category = ?,
-                unit_of_measurement = ?
+                unit_of_measurement = ?,
+                stock_in_quantity = ?
             WHERE id = ?
         `;
 
@@ -78,8 +93,10 @@ const predefinedProductsModel = {
             productData.product_name,
             productData.description || '',
             productData.price_per_unit,
+            productData.selling_price_per_unit,
             productData.category,
             productData.unit_of_measurement,
+            productData.stock_in_quantity,
             productData.id
         ];
 
@@ -98,16 +115,22 @@ const predefinedProductsModel = {
         return db.query(q);
     },
 
+
+    totalStockCount: () => {
+        let q = `SELECT SUM(stock_in_quantity) AS total_stock from predefined_products`;
+        return db.query(q)
+    },
+
     // Get product count grouped by category (all predefined products)
     getProductCountByCategoryAll: () => {
         let q = `
             SELECT 
                 category,
+                SUM(stock_in_quantity) AS total_category_stock,
                 COUNT(*) AS product_count
             FROM predefined_products
             GROUP BY category
-            ORDER BY category ASC
-        `;
+            ORDER BY category ASC`;
 
         return db.query(q);
     }

@@ -15,6 +15,20 @@ const predefinedProductSchema = sequelize.define("predefined_products", {
         comment: "Name of the predefined product (e.g., Tomato, Potato, etc.)",
     },
 
+    image_name: {
+        type: Sequelize.STRING(255),
+        allowNull: true,
+        comment: "Name of the image file associated with the predefined product",
+    },
+
+
+    // INCASE THE IMAGE IS LOCATED AT THE OTHER SOURCE NOT ON SERVER
+    image_url: {
+        type: Sequelize.STRING(255),
+        allowNull: true,
+        comment: "URL of the image associated with the predefined product",
+    },
+
     description: {
         type: Sequelize.TEXT,
         allowNull: true,
@@ -27,6 +41,12 @@ const predefinedProductSchema = sequelize.define("predefined_products", {
         comment: "Price per unit of the predefined product",
     },
 
+    selling_price_per_unit: {
+        type: Sequelize.DECIMAL(10, 2),
+        allowNull: false,
+        comment: "Selling Price per unit of the predefined product",
+    },
+
     category: {
         type: Sequelize.ENUM("Vegetables", "Fruits", "Grains", "Dairy", "Spices", "Pulses", "Others"),
         allowNull: false,
@@ -37,6 +57,14 @@ const predefinedProductSchema = sequelize.define("predefined_products", {
         type: Sequelize.ENUM("Kilogram", "Gram", "Dozen", "Liter", "Piece", "Quintal"),
         allowNull: false,
         comment: "Unit of measurement for the product (e.g., kg, g, dozen, etc.)",
+    },
+
+
+    stock_in_quantity: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        defaultValue: 0,
+        comment: "Initial quantity of the product in stock",
     },
 
     createdAt: {

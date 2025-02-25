@@ -9,7 +9,8 @@ $(() => {
         try {
 
 
-            let farmerData = new FormData(document.getElementById('farmer-signup-form'))
+            let form = document.getElementById('farmer-signup-form')
+            let farmerData = new FormData()
 
 
             const { data } = await axios.post('/api/v1/farmers/signup', farmerData)
@@ -19,6 +20,7 @@ $(() => {
 
             if (success) {
                 toast.success(message)
+                form.reset();
             } else {
                 toast.error(message)
             }

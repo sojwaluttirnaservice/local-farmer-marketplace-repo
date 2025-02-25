@@ -5,6 +5,7 @@ const adminRouter = require("./routes/adminRouter")
 const authRouter = require("./routes/auth/authRouter")
 const farmersRouter = require("./routes/farmersRouter")
 const productsRouter = require("./routes/productsRouter")
+const salesRouter = require("./routes/salesRouter")
 
 
 const viewsRouter = getRouter()
@@ -34,5 +35,9 @@ viewsRouter.use('/auth', authRouter)
 viewsRouter.use('/farmers', farmersRouter)
 
 viewsRouter.use('/products', productsRouter)
+
+viewsRouter.use('/sales', salesRouter)
+
+
 
 module.exports = viewsRouter

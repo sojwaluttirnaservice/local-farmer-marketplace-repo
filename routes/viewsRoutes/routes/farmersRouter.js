@@ -4,7 +4,7 @@ const getRouter = require("../../utils/getRouter");
 
 const farmersRouter = getRouter();
 
-farmersRouter.get('/', checkAdminAuth, farmersController.renderFarmersPage)
+farmersRouter.get('/', checkAdminAuth, farmersController.renderFarmersListPage)
 
 farmersRouter.get('/signup', farmersController.renderSignupPage)
 

@@ -36,9 +36,8 @@
             </section>
 
             <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                <a
-                    href="/users"
-                    class="bg-white p-6 rounded-lg shadow-lg border-t-4 border-blue-600">
+                <!-- href="/users" -->
+                <a class="bg-white p-6 rounded-lg shadow-lg border-t-4 border-blue-600">
                     <h5 class="text-lg font-medium text-gray-700">Total Users</h5>
                     <p id="totalUsers" class="text-4xl font-bold text-blue-800 mt-2">
                         <%= totalUsers %>
@@ -54,9 +53,8 @@
                     </p>
                 </a>
 
-                <a
-                    href="/products"
-                    class="bg-white p-6 rounded-lg shadow-lg border-t-4 border-orange-600">
+                <!-- href="/products" -->
+                <a class="bg-white p-6 rounded-lg shadow-lg border-t-4 border-orange-600">
                     <h5 class="text-lg font-medium text-gray-700">Total Products</h5>
                     <p id="totalProducts" class="text-4xl font-bold text-orange-800 mt-2">
                         <%= totalProducts %>
@@ -93,7 +91,7 @@
                 labels: productsCategoryWiseCount.map(pro => pro.category),
                 datasets: [{
                     label: 'Product Range',
-                    data: productsCategoryWiseCount.map(pro => pro.product_count),
+                    data: productsCategoryWiseCount.map(pro => pro.total_category_stock),
                     backgroundColor: ['#22c55e', '#facc15', '#f97316', '#3b82f6', '#8b5cf6'],
                     hoverOffset: 4
                 }]

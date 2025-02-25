@@ -71,7 +71,36 @@ const farmersModel = {
 
     // Get farmer by ID
     getFarmerById: (id) => {
-        let q = `SELECT * FROM farmers WHERE id = ?`;
+        let q = `
+
+        SELECT 
+                    f.id,
+                    f.farmer_name,
+                    f.email,
+                    f.mobile,
+                    f.address,
+                    f.farm_name,
+                    f.farm_location,
+                    f.established_year,
+                    f.farm_size,
+                    SUM(fp.stock_quantity) AS products_sold
+                FROM farmers AS f
+                LEFT JOIN farmer_products AS fp
+                    ON f.id = fp.farmer_id_fk
+                
+                WHERE f.id = ?
+                GROUP BY 
+                    f.id, 
+                    f.farmer_name, 
+                    f.email, 
+                    f.mobile, 
+                    f.address, 
+                    f.farm_name, 
+                    f.farm_location, 
+                    f.established_year, 
+                    f.farm_size
+                ;
+        `;
         return db.query(q, [id]);
     },
 
@@ -90,19 +119,31 @@ const farmersModel = {
     // List all farmers
     list: () => {
         const q = `
-            SELECT 
-                id,
-                farmer_name,
-                email,
-                mobile,
-                address,
-                farm_name,
-                farm_location,
-                established_year,
-                farm_size
-            FROM farmers
-            ORDER BY farmer_name ASC
-        `;
+                SELECT 
+                    f.id,
+                    f.farmer_name,
+                    f.email,
+                    f.mobile,
+                    f.address,
+                    f.farm_name,
+                    f.farm_location,
+                    f.established_year,
+                    f.farm_size,
+                    SUM(fp.stock_quantity) AS products_sold
+                FROM farmers AS f
+                LEFT JOIN farmer_products AS fp
+                    ON f.id = fp.farmer_id_fk
+                GROUP BY 
+                    f.id, 
+                    f.farmer_name, 
+                    f.email, 
+                    f.mobile, 
+                    f.address, 
+                    f.farm_name, 
+                    f.farm_location, 
+                    f.established_year, 
+                    f.farm_size
+                ORDER BY f.farmer_name ASC;`;
         return db.query(q);
     },
 
@@ -115,32 +156,33 @@ const farmersModel = {
     // Get farmers with their added products
     getFarmersWithProducts: () => {
         let q = `
-            SELECT 
-                f.id AS farmer_id,
-                f.farmer_name,
-                f.email,
-                f.mobile,
-                f.farm_name,
-                f.farm_location,
-                JSON_ARRAYAGG(
-                    JSON_OBJECT(
-                        'farmer_product_id', fp.id,
-                        'predefined_product_id', fp.predefined_product_id_fk,
-                        'product_name', pp.product_name,
-                        'category', pp.category,
-                        'price_per_unit', pp.price_per_unit,
-                        'stock_quantity', fp.stock_quantity,
-                        'is_available', fp.is_available,
-                        'harvest_date', fp.harvest_date,
-                        'expiry_date', fp.expiry_date
-                    )
-                ) AS products
-            FROM farmers AS f
-            LEFT JOIN farmer_products AS fp ON f.id = fp.farmer_id_fk
-            LEFT JOIN predefined_products AS pp ON fp.predefined_product_id_fk = pp.id
-            GROUP BY f.id
+                SELECT 
+                    f.id,
+                    f.farmer_name,
+                    f.email,
+                    f.mobile,
+                    f.address,
+                    f.farm_name,
+                    f.farm_location,
+                    f.established_year,
+                    f.farm_size,
+                    COALESCE(SUM(fp.stock_quantity), 0) AS products_sold
+                FROM farmers AS f
+                LEFT JOIN farmer_products AS fp
+                    ON f.id = fp.farmer_id_fk
+                GROUP BY 
+                    f.id, 
+                    f.farmer_name, 
+                    f.email, 
+                    f.mobile, 
+                    f.address, 
+                    f.farm_name, 
+                    f.farm_location, 
+                    f.established_year, 
+                    f.farm_size
+                ORDER BY f.farmer_name ASC;
             `;
-            // ORDER BY f.farmer_name ASC
+        // ORDER BY f.farmer_name ASC
         return db.query(q);
     },
 

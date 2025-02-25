@@ -1,6 +1,8 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../config/sequelize");
 
+
+
 // Define the User Registration Schema
 const userSchema = sequelize.define("users", {
 

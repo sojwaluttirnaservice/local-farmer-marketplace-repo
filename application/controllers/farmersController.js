@@ -1,30 +1,41 @@
 const farmersModel = require("../models/farmersModel")
+const predefinedProductsModel = require("../models/predefinedProductsModel")
 const asyncHandler = require("../utils/asyncHandler")
 const { renderPage, sendResponse } = require("../utils/responses/ApiResponse")
 
 const farmersController = {
 
 
-    renderFarmersPage: asyncHandler(async (req, res) => {
+    renderFarmersListPage: asyncHandler(async (req, res) => {
         const admin = req.session?.admin
 
         const _farmersResult = await farmersModel.list();
 
-        renderPage(res, 'farmers/farmers-page.ejs', { admin, farmers: _farmersResult[0] })
+       
+
+
+        let renderData = {
+            title: 'Farmers List',
+            admin,
+            farmersList: _farmersResult[0],
+         
+        }
+    
+        renderPage(res, 'farmers/farmers-list-page.ejs', renderData)
     }),
 
 
     renderSignupPage: asyncHandler(async (req, res) => {
-        const admin = req.session?.admin
 
 
         if (process.env.PROJECT_ENV != 'PROD') {
             req.session.admin = { role: 'admin' }
         }
 
+        const admin = req.session?.admin
 
         console.log(admin);
-        renderPage(res, 'farmers/farmers-signup', { admin })
+        renderPage(res, 'farmers/farmers-signup', { title: admin ? 'Add Farmer Page' : "Signup page", admin })
     }),
 
 
