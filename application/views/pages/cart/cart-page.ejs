@@ -1,0 +1,62 @@
+<!-- This is just for referecne, copy this layout for company pages -->
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title><%= title %></title>
+
+        <!-- Common links -->
+        <%- include("../../common/common-links.ejs")%>
+
+        <!-- Company common links -->
+
+        <!-- Common scripts -->
+        <%-include("../../common/common-scripts.ejs")%>
+
+        <!-- Company common scripts -->
+        <%- include("../../common/common-user-scripts.ejs")%>
+
+        <script src="/javascripts/handlers/cart/cartHandler.js" type="module" defer></script>
+
+        <script
+            src="/javascripts/handlers/cart/cartPageHandler.js"
+            type="module"
+            defer></script>
+    </head>
+    <body>
+        <% if(typeof user !== 'undefined' && typeof user != null) {%>
+        <%-include("../../components/navs/outside-navbar.ejs")%> <% } else {%>
+        <%-include("../../components/navs/outside-navbar.ejs")%> <% } %>
+
+        <main>
+            <section class="section cart-section my-8">
+                <div class="container">
+                    <div class="bg-white p-6 rounded-lg shadow-lg">
+                        <div class="cart-table-container">
+                            <table class="w-full text-left">
+                                <thead>
+                                    <tr class="border-b">
+                                        <th class="p-4">Product</th>
+                                        <th class="p-4">Price</th>
+                                        <th class="p-4">Quantity</th>
+                                        <th class="p-4">Total</th>
+                                        <th class="p-4">Remove</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="cart-items-body">
+                                    <!-- Cart Items will be added dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+
+        <%-include("../../components/footers/outside-footer.ejs")%>
+    </body>
+</html>

@@ -5,16 +5,16 @@ const viewAuthController = {
     renderLoginPage: asyncHandler(async (req, res) => {
         let session = req.session
 
-        let { candidate, admin, company } = session
+        let { user, admin, farmer } = session
 
-        if (candidate) {
-            return res.redirect('/candidate/dashboard')
+        if (user) {
+            return res.redirect('/')
         }
         if (admin) {
             return res.redirect('/admin/dashboard')
         }
-        if(company){
-            return res.redirect('/company/dashboard')
+        if (farmer) {
+            return res.redirect('/farmers/dashboard')
         }
         renderPage(res, 'auth/login-page.ejs', { title: 'Login' })
     }),
@@ -22,9 +22,28 @@ const viewAuthController = {
     renderSignupPage: asyncHandler(async (req, res) => {
 
         let { r: role } = req.query;
-        if (role == 'org') {
-            renderPage(res, 'auth/company-signup-page.ejs', { title: "Signup page" })
+
+
+        let session = req.session
+
+        let { user, admin, farmer } = session
+
+        if (user) {
+            return res.redirect('/')
+        }
+        else if (admin) {
+            return res.redirect('/admin/dashboard')
+        }
+        else if (farmer) {
+            return res.redirect('/farmers/dashboard')
+        }
+
+        // In query role either can be farmer i.e. farmer or user 
+
+        if (role == 'f') {
+            renderPage(res, 'auth/farmers-signup-page.ejs', { title: "Signup" })
         } else {
+            // role == 'u'
             renderPage(res, 'auth/signup-page.ejs', { title: 'Signup' })
         }
     })

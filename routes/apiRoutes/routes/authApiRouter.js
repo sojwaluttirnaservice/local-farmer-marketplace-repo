@@ -1,6 +1,6 @@
 const adminAuthController = require("../../../application/controllers/auth/adminAuthController");
-const candidateAuthController = require("../../../application/controllers/auth/candidateAuthController");
-const companyAuthController = require("../../../application/controllers/auth/companyAuthController");
+const candidateAuthController = require("../../../application/controllers/auth/userAuthController");
+const companyAuthController = require("../../../application/controllers/auth/farmerAuthController");
 const { sendResponse } = require("../../../application/utils/responses/ApiResponse");
 const getRouter = require("../../utils/getRouter");
 

@@ -13,7 +13,8 @@ const predefinedProductsModel = {
 
                 category,
                 unit_of_measurement,
-                stock_in_quantity
+                stock_in_quantity,
+                image_name
                 
             ) VALUES (?)
         `;
@@ -26,6 +27,7 @@ const predefinedProductsModel = {
             productData.category,
             productData.unit_of_measurement,
             productData.stock_in_quantity || 0,
+            productData.image_name || ''
         ];
 
         return db.query(q, [insertArray]);
@@ -43,6 +45,7 @@ const predefinedProductsModel = {
                 stock_in_quantity,
                 category,
                 unit_of_measurement,
+                image_name,
                 createdAt,
                 updatedAt
             FROM predefined_products
@@ -64,6 +67,7 @@ const predefinedProductsModel = {
                 category,
                 unit_of_measurement,
                 stock_in_quantity,
+                image_name,
                 createdAt,
                 updatedAt,
                 DATE_FORMAT(createdAt, '%d-%m-%Y') AS _createdAt,
@@ -85,7 +89,8 @@ const predefinedProductsModel = {
                 selling_price_per_unit ?,
                 category = ?,
                 unit_of_measurement = ?,
-                stock_in_quantity = ?
+                stock_in_quantity = ?,
+                image_name = ?
             WHERE id = ?
         `;
 
@@ -97,6 +102,7 @@ const predefinedProductsModel = {
             productData.category,
             productData.unit_of_measurement,
             productData.stock_in_quantity,
+            productData.image_name,
             productData.id
         ];
 
@@ -133,6 +139,31 @@ const predefinedProductsModel = {
             ORDER BY category ASC`;
 
         return db.query(q);
+    },
+
+    getProductsByStockCount: (params = {}) => {
+        let { limit = 0, isDesc = true } = params;
+        let order = isDesc ? "DESC" : "ASC";
+        let q = `
+            SELECT 
+                id,
+                product_name,
+                description,
+                price_per_unit,
+                selling_price_per_unit,
+                category,
+                unit_of_measurement,
+                stock_in_quantity,
+                image_name,
+                createdAt,
+                updatedAt,
+                DATE_FORMAT(createdAt, '%d-%m-%Y') AS _createdAt,
+                DATE_FORMAT(updatedAt, '%d-%m-%Y') AS _updatedAt
+            FROM predefined_products
+            ORDER BY stock_in_quantity  ${order} ${limit > 0 ? `limit ${limit}` : ''}
+        `;
+
+        return db.query(q)
     }
 };
 

@@ -15,86 +15,176 @@
         <!-- Common scripts -->
         <%-include("../common/common-scripts.ejs")%>
 
-        <!-- Company common scripts -->
-        <%- include("../common/common-company-scripts.ejs")%>
+        <!-- common scripts common scripts -->
 
-        <script
-            src="/javascripts/handlers/company/dashboardHandler.js"
-            type="module"
-            defer></script>
+        <% if(typeof user !== 'undefined' && typeof user != null) {%> <%-
+        include("../common/common-user-scripts.ejs")%> <% } %>
+
+        <script src="/javascripts/handlers/home/homePageHandler.js" type="module" defer></script>
+        <script src="/javascripts/handlers/cart/cartHandler.js" type="module" defer></script>
     </head>
     <body>
-        <%- include("../components/navs/outside-navbar.ejs")%>
+        <% if(typeof user !== 'undefined' && typeof user != null) {%>
+        <%-include("../components/navs/outside-navbar.ejs")%> <% } else {%>
+        <%-include("../components/navs/outside-navbar.ejs")%> <% } %>
 
         <main>
+            <!-- HERO SECTION -->
             <section
-                class="py-16 text-center bg-gradient-to-r from-indigo-500 to-purple-600 text-white">
-                <div class="container mx-auto">
-                    <h2 class="text-4xl font-extrabold">AI-Powered HR Assessment</h2>
+                class="relative w-full h-[75vh] flex items-center justify-center text-center text-white overflow-hidden">
+                <!-- Background Video -->
+                <div class="absolute top-0 left-0 w-full h-full pointer-events-none">
+                    <video
+                        class="w-full h-[160%]"
+                        src="/home/hero/vegetablemotion.mp4"
+                        type="video/mp4"
+                        controls
+                        autoplay
+                        muted
+                        loop></video>
+                </div>
+
+                <!-- Overlay for Transparency Effect -->
+                <div class="absolute top-0 left-0 w-full h-full bg-green-700 bg-opacity-20"></div>
+
+                <!-- Hero Content -->
+                <div class="relative z-10 px-6">
+                    <h1 class="text-5xl font-bold">Fresh & Organic Groceries</h1>
                     <p class="mt-4 text-lg">
-                        Find the best candidates with AI-driven analysis and smart filtering.
+                        Get the best quality fruits, vegetables, and dairy products.
                     </p>
-                    <div class="mt-6">
-                        <a
-                            href="#"
-                            class="bg-white text-indigo-600 px-6 py-3 rounded shadow-lg font-semibold hover:bg-gray-200"
-                            >Get Started</a
-                        >
-                    </div>
-                </div>
-            </section>
-
-            <!-- Features Section -->
-            <section class="py-12 bg-white">
-                <div class="container mx-auto text-center">
-                    <h3 class="text-3xl font-bold text-gray-800">Why Choose Us?</h3>
-                    <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-8">
-                        <!-- Feature 1 -->
-                        <div class="p-6 bg-gray-100 rounded-lg shadow">
-                            <h4 class="text-xl font-semibold">AI-Based Assessments</h4>
-                            <p class="mt-2 text-gray-600">
-                                Get AI-generated insights on candidate skills and potential.
-                            </p>
-                        </div>
-
-                        <!-- Feature 2 -->
-                        <div class="p-6 bg-gray-100 rounded-lg shadow">
-                            <h4 class="text-xl font-semibold">Smart HR Search</h4>
-                            <p class="mt-2 text-gray-600">
-                                Find candidates based on skills, experience, and qualifications.
-                            </p>
-                        </div>
-
-                        <!-- Feature 3 -->
-                        <div class="p-6 bg-gray-100 rounded-lg shadow">
-                            <h4 class="text-xl font-semibold">Priority Listings</h4>
-                            <p class="mt-2 text-gray-600">
-                                Candidates can boost their visibility through premium listings.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Call to Action -->
-            <section class="py-12 bg-indigo-600 text-white text-center">
-                <h3 class="text-2xl font-bold">Ready to Find Top Talent?</h3>
-                <p class="mt-2 text-lg">
-                    Sign up today and experience the power of AI-driven hiring.
-                </p>
-                <div class="mt-6">
                     <a
-                        href="#"
-                        class="bg-white text-indigo-600 px-6 py-3 rounded shadow-lg font-semibold hover:bg-gray-200"
-                        >Join Now</a
+                        href="products.html"
+                        class="mt-6 inline-block bg-white text-green-600 font-bold px-6 py-3 rounded-lg hover:bg-gray-200">
+                        Shop Now
+                    </a>
+                </div>
+            </section>
+
+            <!-- Product Categories -->
+            <section class="container mx-auto py-12 px-6">
+                <h2 class="text-3xl font-bold text-center mb-6">Shop by Category</h2>
+                <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    <% categories.forEach(category => { %>
+                    <div
+                        class="bg-white p-6 shadow-lg rounded-lg shadow hover:shadow-2xl transition">
+                        <div class="flex h-full flex-col gap-2">
+                            <div class="grow">
+                                <img
+                                    src="<%= category.image %>"
+                                    alt="<%= category.name %>"
+                                    class="w-full h-full rounded" />
+                            </div>
+                            <h3 class="mt-auto text-lg font-semibold mt-4 text-center">
+                                <%= category.name %>
+                            </h3>
+                        </div>
+                    </div>
+                    <% }); %>
+                </ul>
+            </section>
+
+            <!-- Featured Products -->
+            <section class="container mx-auto py-12 px-6">
+                <h2 class="text-3xl font-bold text-center mb-6">Featured Products</h2>
+                <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    <% featuredProducts.forEach((featuredProduct) => { %>
+                    <li
+                        data-productCategory="<%= featuredProduct.category %>"
+                        class="bg-white p-6 rounded-lg shadow hover:shadow-2xl transition">
+                        <div
+                            class="aspect-square overflow-hidden flex items-center justify-center rounded-md">
+                            <img
+                                src="<%= productImageUrl %>/<%= featuredProduct.image_name %>"
+                                alt="<%= featuredProduct.image_name %>"
+                                onerror="this.src='https://i.pinimg.com/736x/9c/25/85/9c258525e4eb471d29b3c0a2c22d000b.jpg'"
+                                class="w-full rounded" />
+                        </div>
+                        <h3 class="text-lg font-semibold mt-4">
+                            <%= featuredProduct.product_name %>
+                        </h3>
+                        <p class="text-gray-600">
+                            <%= featuredProduct.selling_price_per_unit %> per <%=
+                            featuredProduct.unit_of_measurement %>
+                            <span class="font-bold">INR</span>
+                        </p>
+
+                        <div>
+                            <div class="mt-8">
+                                <div class="flex items-center justify-between gap-2">
+                                    <button
+                                        data-role="add-to-cart-btn"
+                                        data-productId="<%=featuredProduct.id %>"
+                                        data-pricePerUnit="<%=featuredProduct.selling_price_per_unit %>"
+                                        data-unitOfMeasurement="<%=featuredProduct.unit_of_measurement %>"
+                                        data-productName="<%=featuredProduct.product_name %>"
+                                        data-productImageUrl="<%=productImageUrl %>/<%=featuredProduct.image_name %>"
+                                        data-userId="<%=user?.id %>"
+                                        type="button"
+                                        data-targetCountId="target-count_<%= featuredProduct.id %>"
+                                        data-addQuantity="-1"
+                                        class="w-16 bg-rose-800 hover:bg-rose-900 text-white py-2 font-extrabold rounded-sm">
+                                        <i class="fa-solid fa-minus"></i>
+                                    </button>
+
+                                    <span
+                                        data-productId="<%=featuredProduct.id %>"
+                                        data-userId="<%=user?.id %>"
+                                        type="button"
+                                        id="target-count_<%= featuredProduct.id %>"
+                                        class="w-full text-center rounded-lg font-bold">
+                                        0
+                                    </span>
+
+                                    <button
+                                        data-role="add-to-cart-btn"
+                                        data-productId="<%=featuredProduct.id %>"
+                                        data-pricePerUnit="<%=featuredProduct.selling_price_per_unit %>"
+                                        data-unitOfMeasurement="<%=featuredProduct.unit_of_measurement %>"
+                                        data-productName="<%=featuredProduct.product_name %>"
+                                        data-productImageUrl="<%=productImageUrl %>/<%=featuredProduct.image_name %>"
+                                        data-userId="<%=user?.id %>"
+                                        type="button"
+                                        data-targetCountId="target-count_<%= featuredProduct.id %>"
+                                        data-addQuantity="1"
+                                        class="w-16 bg-green-600 hover:bg-green-700 text-white py-2 font-extrabold rounded-sm">
+                                        <i class="fa-solid fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div hidden class="add-to-cart-btn-holder">
+                                <button
+                                    data-role="add-to-cart-btn"
+                                    data-productId="<%=featuredProduct.id %>"
+                                    data-pricePerUnit="<%=featuredProduct.selling_price_per_unit %>"
+                                    data-unitOfMeasurement="<%=featuredProduct.unit_of_measurement %>"
+                                    data-productName="<%=featuredProduct.product_name %>"
+                                    data-productImageUrl="<%=productImageUrl %>/<%=featuredProduct.image_name %>"
+                                    data-userId="<%=user?.id %>"
+                                    type="button"
+                                    data-addQuantity="1"
+                                    class="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg">
+                                    Add to Cart
+                                </button>
+                            </div>
+                        </div>
+                    </li>
+                    <% }) %>
+                </ul>
+
+                <div class="mt-8">
+                    <a
+                        href="/products"
+                        class="block text-green-800 hover:text-green-900 text-xl text-center font-bold tracking-wider"
+                        >View More...</a
                     >
                 </div>
             </section>
 
             <!-- Footer -->
-            <footer class="py-6 bg-gray-800 text-white text-center">
-                <p>&copy; 2025 Candidate HR Assessment Tool. All rights reserved.</p>
-            </footer>
+
+            <%-include("../components/footers/outside-footer.ejs")%>
         </main>
     </body>
 </html>

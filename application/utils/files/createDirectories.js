@@ -5,10 +5,10 @@ let basePath = ''
 
 
 const paths = {
-    candidate: {
-        directoryPath: 'public/uploads/candidate/profile',
-        renderPath: '/uploads/candidate/profile',
-        customPath: 'candidate/profile'
+    product: {
+        directoryPath: 'public/uploads/products/images',
+        renderPath: '/uploads/products/images',
+        customPath: 'products/images'
     },
 }
 

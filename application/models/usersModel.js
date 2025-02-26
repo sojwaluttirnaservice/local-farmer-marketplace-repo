@@ -9,7 +9,7 @@ const usersModel = {
                 user_name,
                 email,
                 password,
-                contact_number,
+                mobile,
                 address,
                 role, 
                 createdAt,
@@ -21,7 +21,7 @@ const usersModel = {
             userData.user_name,
             userData.email,
             userData.password,
-            userData.contact_number,
+            userData.mobile,
             userData.address,
             userData.role || 'user', // Default role to 'user' if not provided
             new Date(),
@@ -40,13 +40,17 @@ const usersModel = {
     // Get user by ID
     getById: (userId) => {
         let q = `
-            SELECT 
+            SELECT
+
                 id,
-                user_name,
+                name,
                 email,
-                contact_number,
+                mobile,
+
+                password,
                 address,
                 role,
+
                 createdAt,
                 updatedAt
             FROM users
@@ -62,7 +66,7 @@ const usersModel = {
             UPDATE users SET 
                 user_name = ?,
                 email = ?,
-                contact_number = ?,
+                mobile = ?,
                 address = ?,
                 role = ?,
                 updatedAt = ?
@@ -72,7 +76,7 @@ const usersModel = {
         const updateArray = [
             userData.user_name,
             userData.email,
-            userData.contact_number,
+            userData.mobile,
             userData.address,
             userData.role || 'user',
             new Date(),
@@ -95,7 +99,7 @@ const usersModel = {
                 id,
                 user_name,
                 email,
-                contact_number,
+                mobile,
                 address,
                 role,
                 createdAt,

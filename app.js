@@ -58,11 +58,25 @@ app.use(logger('dev'));
 app.use(express.json({ limit: '1024mb' }));
 app.use(express.urlencoded({ extended: true, limit: '1024mb' }));
 app.use(cookieParser());
+
+// ✅ Serve all static files correctly
 app.use(express.static(path.join(__dirname, 'public')));
-// OR if your uploads are directly in public folder:
-// app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
 
 
+
+// // ✅ Ensure MP4 files get the correct MIME type
+// app.use(
+//   '/assets/videos',
+//   express.static(path.join(__dirname, 'public/assets/vidoes'), {
+//     setHeaders: (res, path) => {
+//       if (path.endsWith('.mp4')) {
+//         res.setHeader('Content-Type', 'video/mp4')
+//       }
+//     }
+//   })
+// );
+
+// public\assets\videos\home\hero\vegetablemotion.mp4
 
 
 

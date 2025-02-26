@@ -16,17 +16,25 @@ const adminAuthController = {
 
         let session = req.session
 
+        let requestType = req.method;
+
+        let isGetRequest = requestType === "GET"
+
         if (process.env.PROJECT_ENV != 'PROD') {
             req.session.admin = { role: 'admin' }
         }
 
-        if (!session?.admin) {
+        if (session?.admin) {
+            next()
             // return sendResponse(res, 401, false, "Unauthorized")
-            res.redirect('/admin/login')
             return;
         }
 
-        next()
+        if (isGetRequest) {
+            res.redirect('/admin/login')
+        } else {
+            return sendResponse(res, 401, false, 'Unauthorized. Kindly login')
+        }
     }),
 
 
