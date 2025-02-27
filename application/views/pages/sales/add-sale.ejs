@@ -28,12 +28,25 @@
         <%- include("../../components/navs/admin-navbar.ejs")%>
 
         <main>
-            <section class="page-heading">
+            <section
+                data-role="page-heading"
+                class="flex items-center justify-between py-4 px-6 bg-white shadow-md rounded-md">
+                <!-- 🔙 Back Button -->
+                <button
+                    onclick="window.history.back()"
+                    class="flex items-center text-gray-700 hover:text-blue-600 font-semibold transition duration-300">
+                    <i class="fas fa-arrow-left mr-2"></i> Back
+                </button>
+
+                <!-- 📌 Page Title -->
                 <h2
-                    class="text-center text-3xl font-extrabold text-gray-800 tracking-wide relative">
-                    Add Sale 
+                    class="text-3xl font-extrabold text-gray-800 tracking-wide relative text-center flex-grow">
+                    Add Sale
                     <span class="block h-1 w-16 bg-blue-500 mx-auto mt-2 rounded-full"></span>
                 </h2>
+
+                <!-- Placeholder for Alignment (Keeps title centered) -->
+                <div class="w-20"></div>
             </section>
 
             <section class="p-4">
@@ -48,7 +61,8 @@
                 <h2 class="block text-gray-700 text-2xl font-bold mb-6 text-center">
                     Farmer Details
                 </h2>
-                <form class="w-full max-w-lg bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 mx-auto">
+                <form
+                    class="w-full max-w-lg bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 mx-auto">
                     <div class="flex justify-between items-center space-x-4">
                         <!-- Farmer Name -->
                         <div class="w-1/3">
@@ -57,7 +71,7 @@
                             </label>
                             <p class="text-gray-900"><%= farmer.farmer_name %></p>
                         </div>
-            
+
                         <!-- Products Sold -->
                         <div class="w-1/3">
                             <label class="block text-gray-700 text-sm font-bold mb-2">
@@ -65,22 +79,21 @@
                             </label>
                             <p class="text-gray-900"><%= farmer.products_sold %></p>
                         </div>
-            
+
                         <!-- History Button -->
                         <div class="w-1/3">
                             <label class="block text-gray-700 text-sm font-bold mb-2">
                                 History:
                             </label>
-                            <a href="/sales/history/<%= farmer.id %>" 
+                            <a
+                                href="/sales/history/<%= farmer.id %>"
                                 class="text-blue-600 underline hover:text-blue-800 font-bold transition duration-300">
-                                 History
-                             </a>
-                             
+                                History
+                            </a>
                         </div>
                     </div>
                 </form>
             </section>
-            
 
             <section class="px-4 flex justify-center items-center">
                 <form

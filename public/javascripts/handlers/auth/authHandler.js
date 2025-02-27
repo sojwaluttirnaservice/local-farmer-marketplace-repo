@@ -14,7 +14,7 @@ const handleLogin = async (loginDetails) => {
         if (success) {
             toast.success(message)
             setTimeout(() => {
-                window.location.href = loginDetails.get("role") == "company" ? "/company/dashboard" : "/candidate/dashboard"
+                window.location.href = loginDetails.get("role") == "user" ? "/users/dashboard" : "/farmers/dashboard"
             }, 100)
         } else {
             toast.error(message)

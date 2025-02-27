@@ -10,14 +10,15 @@ const authApiRouter = getRouter()
 authApiRouter.post("/login", async (req, res) => {
 
     const { role } = req.body
-    // if (role == 'candidate') {
-    //     return candidateAuthController.login(req, res)
-    // }
+
+    if (role == 'user') {
+        return candidateAuthController.login(req, res)
+    }
     // if (role == 'company') {
     //     return companyAuthController.login(req, res)
     // }
 
-    console.log("here");
+
     if (role == 'admin') {
         return adminAuthController.login(req, res)
     }
@@ -26,6 +27,7 @@ authApiRouter.post("/login", async (req, res) => {
 authApiRouter.post("/logout", async (req, res) => {
     let session = req.session;
 
+    
 
     if (session) {
         req.session.destroy((err) => {

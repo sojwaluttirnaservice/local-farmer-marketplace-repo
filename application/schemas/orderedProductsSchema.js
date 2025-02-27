@@ -1,27 +1,28 @@
 const Sequelize = require("sequelize");
 
 const sequelize = require("../config/sequelize");
-const userSchema = require("./userSchema");
 const predefinedProductSchema = require("./predefinedProductSchema");
+const orderSchema = require("./orderSchema");
 
 // Cart Schema
-const cartSchema = sequelize.define("cart", {
+const orderedProductsSchema = sequelize.define("ordered_products", {
     id: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.BIGINT,
         autoIncrement: true,
         primaryKey: true,
         comment: "Unique identifier for each cart item",
     },
 
-    user_id_fk: {
+
+    order_id_fk: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-            model: userSchema,
+            model: orderSchema,
             key: 'id'
         },
         onDelete: "CASCADE",
-        comment: "User who owns the cart",
+        comment: "Order id to which it belongs",
     },
 
     predefined_product_id_fk: {
@@ -32,28 +33,49 @@ const cartSchema = sequelize.define("cart", {
             key: 'id'
         },
         onDelete: "CASCADE",
-        comment: "Product added to the cart",
+        comment: "Product added to the ordered item",
+    },
+
+
+    product_name: {
+        type: Sequelize.STRING(100),
+        allowNull: false,
+        comment: "Name of the product",
     },
 
     quantity: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        comment: "Quantity added to the cart",
+        comment: "Quantity of the products",
+    },
+    
+
+    price_at_order_time: {
+        type: Sequelize.DECIMAL(10, 2),
+        allowNull: false,
+        comment: "Price of the product at the time of order",
+    },
+
+    total_price: {
+        type: Sequelize.DECIMAL(10, 2),
+        allowNull: false,
+        comment: "price_at_order_time * quantity",
     },
 
     createdAt: {
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
     },
+
     updatedAt: {
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"),
     },
 }, {
     timestamps: true,
-    tableName: "cart",
-    comment: "Table storing cart details",
+    tableName: "ordered_products",
+    comment: "Table storing ordered product details",
 });
 
 
-module.exports = cartSchema;
+module.exports = orderedProductsSchema;

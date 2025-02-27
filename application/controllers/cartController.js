@@ -4,7 +4,7 @@ const { renderPage } = require("../utils/responses/ApiResponse")
 const cartController = {
 
     renderCartPage: asyncHandler(async (req, res) => {
-        renderPage(res, 'cart/cart-page.ejs', { title: 'Cart', user: req.session })
+        renderPage(res, 'cart/cart-page.ejs', { title: 'Cart', user: req.session.user })
     }),
     add: () => { }
 

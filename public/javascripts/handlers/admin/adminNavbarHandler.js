@@ -16,7 +16,7 @@ $(() => {
             if (success) {
                 toast.success(message);
                 setTimeout(() => {
-                    window.open('/admin/login', '_self');
+                    window.open('/', '_self');
                 }, 1000);
             }
         } catch (err) {

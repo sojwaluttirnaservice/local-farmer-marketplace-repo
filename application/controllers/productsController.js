@@ -16,6 +16,8 @@ const productsController = {
         let { admin, user, farmer } = session;
 
 
+        
+
 
         let [_products, _] = await predefinedProductsModel.getProductsByStockCount();
 

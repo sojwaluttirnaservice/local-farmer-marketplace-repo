@@ -32,13 +32,26 @@
         include("../../components/navs/admin-navbar.ejs") %> <% } %>
 
         <main>
-            <section class="page-heading">
+            <section
+                data-role="page-heading"
+                class="flex items-center justify-between py-4 px-6 bg-white shadow-md rounded-md">
+                <!-- 🔙 Back Button -->
+                <button
+                    onclick="window.history.back()"
+                    class="flex items-center text-gray-700 hover:text-blue-600 font-semibold transition duration-300">
+                    <i class="fas fa-arrow-left mr-2"></i> Back
+                </button>
+
+                <!-- 📌 Page Title -->
                 <h2
-                    class="text-center text-3xl font-extrabold text-gray-800 tracking-wide relative">
+                    class="text-3xl font-extrabold text-gray-800 tracking-wide relative text-center flex-grow">
                     <% if (admin != null && admin !== undefined) { %> Add Farmer<% }else { %> Signup
                     Farmer <% }%>
                     <span class="block h-1 w-16 bg-blue-500 mx-auto mt-2 rounded-full"></span>
                 </h2>
+
+                <!-- Placeholder for Alignment (Keeps title centered) -->
+                <div class="w-20"></div>
             </section>
 
             <section class="p-4 flex justify-center items-center">

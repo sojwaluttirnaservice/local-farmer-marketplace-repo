@@ -1,184 +1,128 @@
-import toast from "../../utils/toasts.js"
+import toast from "../../utils/toasts.js";
 
 let sampleCartData = {
     predefined_product_id_fk: 0,
-    count: 0,
+    quantity: 0,
     user_id_fk: 0,
-    price_per_unit: 0,
-}
+    price_at_order_time: 0,
+    total_price: 0,  // Ensure total price is part of the object
+};
 
 // Returns an array of carts
 function getCartDataFromLocalStorage() {
     try {
+        let cartDataFromLocalStorage = localStorage.getItem("cart");
+        let parsedCartData = cartDataFromLocalStorage ? JSON.parse(cartDataFromLocalStorage) : [];
 
-
-        let cartDataFromLocalStorage = localStorage.getItem('cart');
-
-        let parsedCartData = []
-        if (cartDataFromLocalStorage) {
-            parsedCartData = JSON.parse(cartDataFromLocalStorage)
-        }
-        console.log("Cart from the local storage");
-        console.log(parsedCartData);
-        return parsedCartData
-
+        console.log("Cart from local storage:", parsedCartData);
+        return parsedCartData;
     } catch (err) {
-        console.error('Error:', err);
-        toast.error('Error while getting data from cart')
+        console.error("Error:", err);
+        toast.error("Error while getting data from cart");
+        return [];
     }
 }
 
-// Store in the lcoalstorage
+// Store in local storage
 function setCartDataToLocalStorage(cartData) {
     try {
-        console.log("Cart from the local storage");
-        console.log(cartData);
-        localStorage.setItem('cart', JSON.stringify(cartData));
+        console.log("Saving cart to local storage:", cartData);
+        localStorage.setItem("cart", JSON.stringify(cartData));
         return true;
     } catch (err) {
-        console.error('Error:', err);
+        console.error("Error:", err);
         return false;
     }
 }
 
-
-function resetCartDataToLocalStorage(cartData) {
+// Reset the cart data
+function resetCartDataToLocalStorage() {
     try {
-        localStorage.removeItem('cart');
+        localStorage.removeItem("cart");
         return true;
     } catch (err) {
-        console.error('Error:', err);
+        console.error("Error:", err);
         return false;
     }
 }
 
-
-
+// Update UI cart count (for cart icon display)
 function showCartCountOnUI(cartData) {
-    let itemsCount = 0;
-    cartData?.forEach(item => itemsCount += item.count);
-    document.querySelectorAll('.cart-items-count')
-        ?.forEach(cartItem => cartItem.innerText = itemsCount)
+    let itemsCount = cartData.reduce((total, item) => total + item.quantity, 0);
+    let countsElements = document.querySelectorAll(".cart-items-count");
+    if (countsElements)
+        countsElements.forEach(cartItem => (cartItem.innerText = itemsCount));
 }
 
+// Update individual product count in UI
 function updateCartWiseCountOnUI(cartData) {
-
-    cartData?.forEach(cartItem => {
-        let itemCount = cartItem.count;
+    cartData.forEach(cartItem => {
         let productId = cartItem.predefined_product_id_fk;
-
-        let targetElementId = `target-count_${productId}`;
-
-        let cartCountElement = document.getElementById(targetElementId)
-
-        if (cartCountElement)
-            cartCountElement.innerText = itemCount
-    })
+        let targetElement = document.getElementById(`target-count_${productId}`);
+        if (targetElement) targetElement.innerText = cartItem.quantity;
+    });
 }
 
+// Function to add items to the cart
 function addToCart(item) {
     let cartData = getCartDataFromLocalStorage();
-
     let existingItem = cartData.find(cartItem => cartItem.predefined_product_id_fk === item.predefined_product_id_fk);
 
     if (!existingItem) {
-        // IF IT IS MEANT FOR ADDING ONLY THEN PUSH IT ELSE DO NOTHING LOL
-        if (item.count > 0)
+        if (item.quantity > 0) {
+            item.total_price = item.price_at_order_time * item.quantity; // Correct total price calculation
             cartData.push(item);
-
+        }
     } else {
-        // IF IT IS ADD CASE THEN SIMPLY INCREASE EXISTING COUNT
-        if (item.count > 0) {
-            existingItem.count += item.count;
-        } else if (existingItem.count > 0 && item.count < 0) {
-            existingItem.count += item.count;
+        if (item.quantity > 0) {
+            existingItem.quantity += item.quantity;
+            existingItem.total_price = existingItem.price_at_order_time * existingItem.quantity; // Update total price
+        } else if (existingItem.quantity > 0 && item.quantity < 0) {
+            let newQuantity = existingItem.quantity + item.quantity;
+            existingItem.quantity = Math.max(0, newQuantity); // Prevent negative quantity
+            existingItem.total_price = existingItem.price_at_order_time * existingItem.quantity;
         }
     }
+
     setCartDataToLocalStorage(cartData);
     updateCartWiseCountOnUI(cartData);
     showCartCountOnUI(cartData);
 }
 
-// STORING THE DATA IN THE LOCAL STORAGE FOR THE CART
+// Load cart on page load
 let cart = getCartDataFromLocalStorage();
-updateCartWiseCountOnUI(cart)
+updateCartWiseCountOnUI(cart);
 
-export { getCartDataFromLocalStorage, setCartDataToLocalStorage, resetCartDataToLocalStorage }
+export { getCartDataFromLocalStorage, setCartDataToLocalStorage, resetCartDataToLocalStorage, showCartCountOnUI };
 
 $(() => {
-
-
-    // Add event listener to the add to cart button
-
-
     function handleAddToCart(e) {
         e.preventDefault();
 
         try {
-            let productId = $(this).attr('data-productId')
-            let addQuantity = $(this).attr('data-addQuantity');
-
-            let predefinedProductId = parseInt(productId);
-            let count = parseInt(addQuantity)
-
-            let pricePerUnit = parseFloat($(this).attr('data-pricePerUnit'));
-            let unitOfMeasurement = $(this).attr('data-unitOfMeasurement')
-
-            let productName = $(this).attr('data-productName')
-            let productImageUrl = $(this).attr('data-productImageUrl') || ''
+            let productId = parseInt($(this).attr("data-productId"));
+            let quantity = parseInt($(this).attr("data-addQuantity"));
+            let pricePerUnit = parseFloat($(this).attr("data-pricePerUnit"));
+            let unitOfMeasurement = $(this).attr("data-unitOfMeasurement");
+            let productName = $(this).attr("data-productName");
+            let productImageUrl = $(this).attr("data-productImageUrl") || "";
 
             let cartItem = {
-                predefined_product_id_fk: predefinedProductId,
-                count: count,
-                user_id_fk: 0, // TODO: Get the user id from the local storage
-                price_per_unit: pricePerUnit,
-                unit_of_measurement: unitOfMeasurement,
+                predefined_product_id_fk: productId,
                 product_name: productName,
-                img: productImageUrl
-            }
+                quantity: quantity,
+                price_at_order_time: pricePerUnit,
+                user_id_fk: 0, // TODO: Get the user ID from session/local storage
+                unit_of_measurement: unitOfMeasurement,
+                total_price: pricePerUnit * quantity, // Ensure correct calculation
+                img: productImageUrl,
+            };
 
-            addToCart(cartItem)
+            addToCart(cartItem);
         } catch (err) {
-            console.error('Error:', err);
+            console.error("Error:", err);
         }
     }
 
-    $(document).on('click', "[data-role='add-to-cart-btn']", handleAddToCart)
-})
-
-
-// THE BELOW FUNCTION SAVES THE DATA TO THE BACKEDN IN DB
-
-// // Build this
-// async function handleAddToCart(e) {
-//     e.preventDefault();
-
-//     try {
-
-
-//         const { data } = await axios.post('/api/v1/cart')
-
-//         let { success, message } = data;
-
-
-//         if (success) {
-//             toast.success(message)
-//         } else {
-//             toast.error(message)
-//         }
-//     } catch (err) {
-//         console.error('Error:', err);
-//         let resData = err?.response?.data
-//         if (resData) {
-//             let { statusCode, message } = resData
-//             if (statusCode == '401') {
-//                 // Asking to kindly login
-//                 toast.error("Login first to add to the cart")
-//             } else {
-//                 toast.error(message)
-//             }
-//         } else {
-//             toast.error('Unable to add to the cart')
-//         }
-//     }
-// }
+    $(document).on("click", "[data-role='add-to-cart-btn']", handleAddToCart);
+});

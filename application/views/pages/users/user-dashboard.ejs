@@ -28,9 +28,8 @@
             defer></script>
     </head>
     <body>
-        <% if(typeof user !== 'undefined' && typeof user != null) {%>
-        <%-include("../../components/navs/user-navbar.ejs")%> <% } else {%>
-        <%-include("../../components/navs/outside-navbar.ejs")%> <% } %>
+        
+        <%-include("../../components/navs/user-navbar.ejs")%>
 
         <main>
             <section class="section cart-section my-8">
@@ -50,13 +49,6 @@
                                 <tbody id="cart-items-body">
                                     <!-- Cart Items will be added dynamically -->
                                 </tbody>
-                                <tfoot>
-                                    <tr class="border-t">
-                                        <td colspan="3" class="text-right p-4 font-semibold">Total:</td>
-                                        <td class="p-4" id="cart-total">₹0.00</td>
-                                        <td></td>
-                                    </tr>
-                                </tfoot>
                             </table>
                         </div>
                     </div>
@@ -64,8 +56,6 @@
             </section>
         </main>
 
-        <!-- Footer -->
-
-        <%-include("../../components/footers/outside-footer.ejs")%>
+      
     </body>
 </html>

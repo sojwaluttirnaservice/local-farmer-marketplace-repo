@@ -6,29 +6,33 @@ const usersModel = {
     add: (userData) => {
         let q = `
             INSERT INTO users (
-                user_name,
+                name,
                 email,
                 password,
                 mobile,
                 address,
-                role, 
+                role,
+                status,
+                user_type,
                 createdAt,
                 updatedAt
-            ) VALUES (?)
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         `;
 
         const insertArray = [
-            userData.user_name,
+            userData.name,
             userData.email,
             userData.password,
-            userData.mobile,
-            userData.address,
+            userData.mobile || null,
+            userData.address || null,
             userData.role || 'user', // Default role to 'user' if not provided
+            userData.status || 'ACTIVE', // Default status to 'ACTIVE'
+            userData.user_type || 'NORMAL', // Default user type to 'NORMAL'
             new Date(),
             new Date()
         ];
 
-        return db.query(q, [insertArray]);
+        return db.query(q, insertArray);
     },
 
     // Get user by email
@@ -41,16 +45,15 @@ const usersModel = {
     getById: (userId) => {
         let q = `
             SELECT
-
                 id,
                 name,
                 email,
                 mobile,
-
                 password,
                 address,
                 role,
-
+                status,
+                user_type,
                 createdAt,
                 updatedAt
             FROM users
@@ -64,21 +67,25 @@ const usersModel = {
     update: (userData) => {
         let q = `
             UPDATE users SET 
-                user_name = ?,
+                name = ?,
                 email = ?,
                 mobile = ?,
                 address = ?,
                 role = ?,
+                status = ?,
+                user_type = ?,
                 updatedAt = ?
             WHERE id = ?
         `;
 
         const updateArray = [
-            userData.user_name,
+            userData.name,
             userData.email,
-            userData.mobile,
-            userData.address,
+            userData.mobile || null,
+            userData.address || null,
             userData.role || 'user',
+            userData.status || 'ACTIVE',
+            userData.user_type || 'NORMAL',
             new Date(),
             userData.id
         ];
@@ -97,15 +104,17 @@ const usersModel = {
         let q = `
             SELECT 
                 id,
-                user_name,
+                name,
                 email,
                 mobile,
                 address,
                 role,
+                status,
+                user_type,
                 createdAt,
                 updatedAt
             FROM users
-            ORDER BY user_name ASC
+            ORDER BY name ASC
         `;
 
         return db.query(q);

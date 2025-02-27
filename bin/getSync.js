@@ -1,9 +1,9 @@
 
 const sequelize = require('../application/config/sequelize');
 const adminSchema = require('../application/schemas/adminSchema');
-const cartSchema = require('../application/schemas/cartSchema');
 const farmerSalesSchema = require('../application/schemas/farmerSalesSchema');
 const farmerSchema = require('../application/schemas/farmerSchema');
+const orderedProductsSchema = require('../application/schemas/orderedProductsSchema');
 const orderSchema = require('../application/schemas/orderSchema');
 const paymentSchema = require('../application/schemas/paymentSchema');
 const predefinedProductSchema = require('../application/schemas/predefinedProductSchema');

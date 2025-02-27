@@ -1,7 +1,6 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../config/sequelize");
 const userSchema = require("./userSchema");
-const productSchema = require("./predefinedProductSchema");
 
 // Order Schema
 const orderSchema = sequelize.define("orders", {
@@ -11,7 +10,8 @@ const orderSchema = sequelize.define("orders", {
         primaryKey: true,
         comment: "Unique identifier for each order",
     },
-    user_id: {
+
+    user_id_fk: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -19,45 +19,50 @@ const orderSchema = sequelize.define("orders", {
             key: 'id'
         },
         onDelete: "CASCADE",
-        comment: "User who placed the order",
+        comment: "Reference to the user who placed the order",
     },
-    product_id: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-            model: productSchema,
-            key: 'id'
-        },
-        onDelete: "CASCADE",
-        comment: "Product being ordered",
-    },
-    quantity: {
-        type: Sequelize.FLOAT,
-        allowNull: false,
-        comment: "Quantity of product ordered",
-    },
-    total_price: {
-        type: Sequelize.FLOAT,
-        allowNull: false,
-        comment: "Total price for the order",
-    },
-    order_status: {
-        type: Sequelize.ENUM("Pending", "Confirmed", "Shipped", "Delivered", "Cancelled"),
+
+    payment_status: {
+        type: Sequelize.ENUM("Pending", "Completed", "Failed", "Refunded"),
         defaultValue: "Pending",
-        comment: "Current status of the order",
+        allowNull: false,
+        comment: "Payment status for the order",
     },
+
+    delivery_status: {
+        type: Sequelize.ENUM("Not Dispatched", "Out for Delivery", "Delivered"),
+        defaultValue: "Not Dispatched",
+        allowNull: false,
+        comment: "Tracking the delivery progress of the order",
+    },
+
+    payment_mode: {
+        type: Sequelize.ENUM('ONLINE', 'CASH'),
+        allowNull: false,
+        comment: "Payment method used by the user",
+    },
+
+    payment_transaction_number: {
+        type: Sequelize.STRING(255),
+        allowNull: true,
+        comment: "Transaction number for the online payment",
+    },
+
     createdAt: {
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
+        comment: "Timestamp when the order was created",
     },
+    
     updatedAt: {
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"),
+        comment: "Timestamp when the order was last updated",
     },
 }, {
     timestamps: true,
     tableName: "orders",
-    comment: "Table storing order details",
+    comment: "Table storing user order details",
 });
 
-module.exports = orderSchema
+module.exports = orderSchema;

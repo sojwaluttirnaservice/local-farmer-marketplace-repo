@@ -31,7 +31,7 @@ const indexController = {
         // Render the homepage with relevant data
         renderPage(res, 'homepage.ejs', {
             title: 'Homepage',
-            user: user || null,
+            user: user,
             categories,
             featuredProducts: _featuredProducts,
             productImageUrl: paths.product.renderPath

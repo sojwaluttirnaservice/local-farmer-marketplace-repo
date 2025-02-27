@@ -16,7 +16,7 @@ const userAuthController = {
 
         if (process.env.PROJECT_ENV == 'DEV') {
             if (!req.session.user) {
-                console.log("rrrrrrrrrrrrrrrrrr");
+
                 let [_users, _] = await usersModel.getById(1);
                 req.session.user = _users[0] || {};
                 // session = req.session;

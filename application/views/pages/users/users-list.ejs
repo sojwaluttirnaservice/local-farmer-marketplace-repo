@@ -1,0 +1,138 @@
+<!-- This is just for referecne, copy this layout for company pages -->
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title><%= title %></title>
+
+        <!-- Common links -->
+        <%- include("../../common/common-links.ejs")%>
+
+        <!-- Admin common links -->
+        <%- include("../../common/common-admin-links.ejs")%>
+
+        <!-- Company common links -->
+
+        <!-- Common scripts -->
+        <%-include("../../common/common-scripts.ejs")%>
+
+        <!-- Admin common scripts -->
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <%- include("../../common/common-admin-scripts.ejs")%>
+    </head>
+    <body>
+        <%- include("../../components/navs/admin-navbar.ejs")%>
+
+        <main>
+     
+            <section
+                data-role="page-heading"
+                class="flex items-center justify-between py-4 px-6 bg-white shadow-md rounded-md">
+                <!-- 🔙 Back Button -->
+                <button
+                    onclick="window.history.back()"
+                    class="flex items-center text-gray-700 hover:text-blue-600 font-semibold transition duration-300">
+                    <i class="fas fa-arrow-left mr-2"></i> Back
+                </button>
+
+                <!-- 📌 Page Title -->
+                <h2
+                    class="text-3xl font-extrabold text-gray-800 tracking-wide relative text-center flex-grow">
+                    Users (Total Users: <%= totalUsers %>)
+                    <span class="block h-1 w-16 bg-blue-500 mx-auto mt-2 rounded-full"></span>
+                </h2>
+
+                <!-- Placeholder for Alignment (Keeps title centered) -->
+                <div class="w-20"></div>
+            </section>
+
+            <section class="section users-list-section">
+                <div class="p-6 bg-white shadow-md rounded-lg">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">Users List</h2>
+
+                    <div class="overflow-x-auto">
+                        <table
+                            class="min-w-full bg-white border border-gray-200 shadow-md rounded-lg">
+                            <!-- Table Head -->
+                            <thead class="bg-green-600 text-white">
+                                <tr>
+                                    <th class="px-4 py-3 text-left text-sm font-medium">#</th>
+                                    <th class="px-4 py-3 text-left text-sm font-medium">Name</th>
+                                    <th class="px-4 py-3 text-left text-sm font-medium">Email</th>
+                                    <th class="px-4 py-3 text-left text-sm font-medium">Mobile</th>
+                                    <th hidden class="px-4 py-3 text-left text-sm font-medium">
+                                        Role
+                                    </th>
+                                    <th hidden class="px-4 py-3 text-left text-sm font-medium">
+                                        Status
+                                    </th>
+                                    <th hidden class="px-4 py-3 text-left text-sm font-medium">
+                                        User Type
+                                    </th>
+                                    <th hidden class="px-4 py-3 text-left text-sm font-medium">
+                                        Actions
+                                    </th>
+                                    <th class="px-4 py-3 text-left text-sm font-medium">Orders</th>
+                                </tr>
+                            </thead>
+
+                            <!-- Table Body -->
+                            <tbody class="divide-y divide-gray-200 bg-gray-50">
+                                <% users.forEach((user, index) => { %>
+                                <tr class="hover:bg-green-100 transition duration-200">
+                                    <td class="px-4 py-3 text-sm text-gray-700">
+                                        <%= index + 1 %>
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-900 font-medium">
+                                        <%= user.name %>
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-700">
+                                        <%= user.email %>
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-700">
+                                        <%= user.mobile || 'N/A' %>
+                                    </td>
+                                    <td hidden class="px-4 py-3 text-sm text-gray-700 capitalize">
+                                        <%= user.role %>
+                                    </td>
+                                    <td hidden class="px-4 py-3 text-sm font-semibold">
+                                        <span
+                                            class="px-2 py-1 rounded-md <% if (user.status === 'ACTIVE') { %> bg-green-500 text-white <% } %> <% if (user.status === 'INACTIVE') { %> bg-yellow-500 text-white <% } %> <% if (user.status === 'SUSPENDED') { %> bg-red-500 text-white <% } %>">
+                                            <%= user.status %>
+                                        </span>
+                                    </td>
+                                    <td hidden class="px-4 py-3 text-sm text-gray-700 capitalize">
+                                        <%= user.user_type %>
+                                    </td>
+                                    <td hidden class="px-4 py-3 flex space-x-2">
+                                        <a
+                                            href="/users/edit/<%= user.id %>"
+                                            class="px-3 py-1 bg-blue-500 text-white text-xs rounded-md hover:bg-blue-600 transition">
+                                            Edit
+                                        </a>
+                                        <a
+                                            href="/users/delete/<%= user.id %>"
+                                            class="px-3 py-1 bg-red-500 text-white text-xs rounded-md hover:bg-red-600 transition">
+                                            Delete
+                                        </a>
+                                    </td>
+                                    <td class="px-4 py-3 flex space-x-2">
+                                        <a
+                                            href="/orders/u/<%= user.id %>"
+                                            class="px-3 py-1 bg-blue-500 text-white text-xs rounded-md hover:bg-blue-600 transition">
+                                            Orders
+                                        </a>
+                                    </td>
+                                </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </body>
+</html>

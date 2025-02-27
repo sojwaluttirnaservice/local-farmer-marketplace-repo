@@ -32,13 +32,28 @@
         include("../../components/navs/admin-navbar.ejs") %> <% } %>
 
         <main>
-            <section class="page-heading">
+   
+
+            <section
+                data-role="page-heading"
+                class="flex items-center justify-between py-4 px-6 bg-white shadow-md rounded-md">
+                <!-- 🔙 Back Button -->
+                <button
+                    onclick="window.history.back()"
+                    class="flex items-center text-gray-700 hover:text-blue-600 font-semibold transition duration-300">
+                    <i class="fas fa-arrow-left mr-2"></i> Back
+                </button>
+
+                <!-- 📌 Page Title -->
                 <h2
-                    class="text-center text-3xl font-extrabold text-gray-800 tracking-wide relative">
+                    class="text-3xl font-extrabold text-gray-800 tracking-wide relative text-center flex-grow">
                     <% if (admin != null && admin !== undefined) { %> Add Product<% }else { %> Add
-                    Product <% }%>
+                        Product <% }%>
                     <span class="block h-1 w-16 bg-blue-500 mx-auto mt-2 rounded-full"></span>
                 </h2>
+
+                <!-- Placeholder for Alignment (Keeps title centered) -->
+                <div class="w-20"></div>
             </section>
 
             <!-- Section: Form to Add Predefined Product -->
@@ -189,62 +204,80 @@
             </section>
 
             <!-- Section: Predefined Products List Table -->
-            <section class="p-4">
-                <h2 class="text-2xl font-bold mb-4 text-center">Predefined Products List</h2>
+            <section class="p-6 bg-white shadow-md rounded-lg">
+                <h2 class="text-2xl font-bold mb-4 text-center text-gray-900">Predefined Products List</h2>
+            
                 <div class="overflow-x-auto">
-                    <table class="min-w-full bg-white border">
-                        <thead>
-                            <tr class="bg-gray-200">
-
-                                <%
-                                    const headers = ["Product Name (Code)", "Description", "Price per Unit", "Selling Price per Unit", "Category", "Unit", "Created At", "Updated At"]
-
-                                    headers.forEach((heading) => {%>
-
-                                        <th class="py-2 px-4 border-b text-left"><%= heading %></th>
-                                <% }) %>
-                         
+                    <table class="min-w-full bg-white border border-gray-200 shadow-md rounded-lg">
+                        <!-- Table Head -->
+                        <thead class="bg-green-600 text-white">
+                            <tr>
+                                <th class="px-4 py-3 text-left text-sm font-medium">#</th>
+                                <th class="px-4 py-3 text-left text-sm font-medium">Product</th>
+                                <th class="px-4 py-3 text-left text-sm font-medium">Description</th>
+                                <th class="px-4 py-3 text-left text-sm font-medium">Price/Unit</th>
+                                <th class="px-4 py-3 text-left text-sm font-medium">Selling Price</th>
+                                <th class="px-4 py-3 text-left text-sm font-medium">Category</th>
+                                <th class="px-4 py-3 text-left text-sm font-medium">Unit</th>
+                                <th class="px-4 py-3 text-left text-sm font-medium">Created At</th>
+                                <th class="px-4 py-3 text-left text-sm font-medium">Updated At</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <!-- Example row; in real implementation, iterate over products -->
-                            <% if(predefinedProductsList){ %>
-
-                                <%predefinedProductsList.forEach((product) => { %>
-                                    <tr>
-
-                                        <!-- https://i.pinimg.com/736x/9c/25/85/9c258525e4eb471d29b3c0a2c22d000b.jpg -->
-                                        <td class="py-2 px-4 border-b">
-                                            <div class="flex items-center gap-2">
-                                                <img class="size-10 rounded-full" src="<%=productImageUrl%>/<%=product.image_name%>" alt="" onerror="this.src='https://i.pinimg.com/736x/9c/25/85/9c258525e4eb471d29b3c0a2c22d000b.jpg'">
-                                                <span>
-                                                    <%= product.product_name %>(<%= product.id %>)</td>
+            
+                        <!-- Table Body -->
+                        <tbody class="divide-y divide-gray-200 bg-gray-50">
+                            <% if(predefinedProductsList && predefinedProductsList.length > 0) { %>
+                                <% predefinedProductsList.forEach((product, index) => { %>
+                                    <tr class="hover:bg-green-100 transition duration-200">
+                                        <!-- Serial Number -->
+                                        <td class="px-4 py-3 text-sm text-gray-700"><%= index + 1 %></td>
+            
+                                        <!-- Product Image & Name -->
+                                        <td class="px-4 py-3 border-b">
+                                            <div class="flex items-center gap-3">
+                                                <img class="w-12 h-12 rounded-md border border-gray-300 shadow-sm" 
+                                                     src="<%= productImageUrl %>/<%= product.image_name %>" 
+                                                     alt="<%= product.product_name %>"
+                                                     onerror="this.src='https://i.pinimg.com/736x/9c/25/85/9c258525e4eb471d29b3c0a2c22d000b.jpg'">
+                                                <span class="font-medium text-gray-900">
+                                                    <%= product.product_name %> (<%= product.id %>)
                                                 </span>
                                             </div>
-                                        <td class="py-2 px-4 border-b"><%= product.description %></td>
-                                        <td class="py-2 px-4 border-b"><%= product.price_per_unit %></td>
-                                        <td class="py-2 px-4 border-b"><%= product.selling_price_per_unit %></td>
-                                        <td class="py-2 px-4 border-b"><%= product.category %></td>
-                                        <td class="py-2 px-4 border-b"><%= product.unit_of_measurement %></td>
-                                        <td class="py-2 px-4 border-b"><%= product._createdAt%></td>
-                                        <td class="py-2 px-4 border-b"><%= product._updatedAt%></td>
+                                        </td>
+            
+                                        <!-- Description -->
+                                        <td class="px-4 py-3 text-sm text-gray-700"><%= product.description %></td>
+            
+                                        <!-- Price per Unit -->
+                                        <td class="px-4 py-3 text-sm font-semibold text-gray-700">₹<%= product.price_per_unit %></td>
+            
+                                        <!-- Selling Price per Unit -->
+                                        <td class="px-4 py-3 text-sm font-semibold text-gray-700">₹<%= product.selling_price_per_unit %></td>
+            
+                                        <!-- Category -->
+                                        <td class="px-4 py-3 text-sm text-gray-700 capitalize"><%= product.category %></td>
+            
+                                        <!-- Unit of Measurement -->
+                                        <td class="px-4 py-3 text-sm text-gray-700 capitalize"><%= product.unit_of_measurement %></td>
+            
+                                        <!-- Created At -->
+                                        <td class="px-4 py-3 text-sm text-gray-600"><%= product._createdAt %></td>
+            
+                                        <!-- Updated At -->
+                                        <td class="px-4 py-3 text-sm text-gray-600"><%= product._updatedAt %></td>
                                     </tr>
-                                
-                                <% })%>
-
-                            <% }else {%>
-                                <div>
-                                    No entry found
-                                </div>
-                            <% }%>
-
-
-                           
-                           
+                                <% }) %>
+                            <% } else { %>
+                                <!-- No Data Found Row -->
+                                <tr>
+                                    <td colspan="9" class="py-4 px-6 text-center text-gray-500 font-medium">No products found</td>
+                                </tr>
+                            <% } %>
                         </tbody>
                     </table>
                 </div>
             </section>
+            
         </main>
     </body>
 </html>

@@ -1,3 +1,6 @@
+const { checkAdminAuth } = require("../../../application/controllers/auth/adminAuthController");
+const { checkUserAuth } = require("../../../application/controllers/auth/userAuthController");
+const usersController = require("../../../application/controllers/usersController");
 const getRouter = require("../../utils/getRouter");
 
 const usersRouter = getRouter();
@@ -11,15 +14,18 @@ const usersRouter = getRouter();
 // /dashboard
 
 
-usersRouter.get('/dashboard',)
+usersRouter.get('/', checkAdminAuth, usersController.renderUsersPage)
+
+
+usersRouter.get('/dashboard', checkUserAuth, usersController.renderUserDashboardPage)
 
 // /profile
 
-usersRouter.get('/profile')
+usersRouter.get('/profile', checkUserAuth, usersController.renderUserProfilePage)
 
 // /cart
 
-usersRouter.get('/cart')
+// usersRouter.get('/cart')
 
 
 // 

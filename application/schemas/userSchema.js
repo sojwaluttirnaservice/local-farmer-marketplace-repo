@@ -1,8 +1,6 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../config/sequelize");
 
-
-
 // Define the User Registration Schema
 const userSchema = sequelize.define("users", {
 
@@ -35,13 +33,6 @@ const userSchema = sequelize.define("users", {
         comment: "Hashed user password",
     },
 
-    role: {
-        type: Sequelize.ENUM("user"),
-        allowNull: false,
-        defaultValue: "user",
-        comment: "Role of the user",
-    },
-
     mobile: {
         type: Sequelize.STRING(15),
         allowNull: true,
@@ -51,7 +42,30 @@ const userSchema = sequelize.define("users", {
     address: {
         type: Sequelize.STRING(500),
         allowNull: true,
+        defaultValue: '',
         comment: "User's address for delivery purposes",
+    },
+
+
+    role: {
+        type: Sequelize.ENUM("user"),
+        allowNull: false,
+        defaultValue: "user",
+        comment: "Role of the user",
+    },
+
+    status: {
+        type: Sequelize.ENUM("ACTIVE", "INACTIVE", "SUSPENDED"),
+        allowNull: false,
+        defaultValue: "ACTIVE",
+        comment: "Status of the user (ACTIVE/INACTIVE/SUSPENDED)",
+    },
+
+    user_type: {
+        type: Sequelize.ENUM("PREMIUM", "NORMAL"),
+        allowNull: false,
+        defaultValue: "NORMAL",
+        comment: "Type of user (PREMIUM/NORMAL)",
     },
 
     createdAt: {
