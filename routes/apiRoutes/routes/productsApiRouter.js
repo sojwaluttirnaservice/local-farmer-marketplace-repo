@@ -10,7 +10,7 @@ productsApiRouter.post('/p', checkAdminOrFarmerAuth, productsController.add)
 // productsApiRouter.put('/p', checkAdminOrFarmerAuth, productsController.update)
 
 
-// productsApiRouter.get('/', f)
+productsApiRouter.get('/p/:productId', productsController.getProductDetails)
 
 
 module.exports = productsApiRouter

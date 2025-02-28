@@ -2,6 +2,52 @@ const db = require("../config/db.connect")
 
 const ordersModel = {
 
+
+    getById: (orderId) => {
+        return db.query(`SELECT * FROM orders WHERE id = ?`, [orderId])
+    },
+
+
+    create: (userId) => {
+
+        let q = `INSERT INTO orders
+                    (
+                        user_id_fk
+                    )
+                    VALUES 
+                    (?)`
+
+        return db.query(q, [userId])
+    },
+
+
+    update: (updateDetails, originalOrderDetails = {}) => {
+        let q = `UPDATE orders 
+                SET 
+                    payment_status = ?,
+                    delivery_status = ?,
+                    payment_mode = ?,
+                    razorpay_payment_id = ?,
+                    razorpay_order_id = ?,
+                    razorpay_signature = ?
+                WHERE  
+                    id = ?`
+
+
+        let updateArray = [
+            updateDetails.payment_status || originalOrderDetails?.payment_status,
+            updateDetails.delivery_status || originalOrderDetails?.delivery_status,
+            updateDetails.payment_mode || originalOrderDetails?.payment_mode,
+            updateDetails.razorpay_payment_id || originalOrderDetails?.razorpay_payment_id,
+            updateDetails.razorpay_order_id || originalOrderDetails?.razorpay_order_id,
+            updateDetails.razorpay_signature || originalOrderDetails?.razorpay_signature,
+
+            updateDetails.id
+        ]
+
+        return db.query(q, updateArray)
+    },
+
     /**
          * Fetches all orders placed by a specific user along with ordered items.
          * 
@@ -14,7 +60,8 @@ const ordersModel = {
          *      - `payment_status` (string): Status of the payment (Pending, Completed, etc.).
          *      - `delivery_status` (string): Status of the order's delivery.
          *      - `payment_mode` (string): Payment method used (ONLINE, CASH).
-         *      - `payment_transaction_number` (string | null): Transaction ID (if applicable).
+         *      - `razorpay_payment_id` (string | null): Razorpay payment ID (if applicable).
+         *      - `razorpay_order_id` (string | null): Razorpay order ID (if applicable).
          *      - `createdAt` (Date): Timestamp when the order was created.
          *      - `updatedAt` (Date): Timestamp when the order was last updated.
          *      - `ordered_items` (Array): Nested array of ordered items, each containing:
@@ -42,7 +89,8 @@ const ordersModel = {
                         'payment_status', o.payment_status,
                         'delivery_status', o.delivery_status,
                         'payment_mode', o.payment_mode,
-                        'payment_transaction_number', o.payment_transaction_number,
+                        'razorpay_payment_id', o.razorpay_payment_id,
+                        'razorpay_order_id', o.razorpay_order_id,
                         'createdAt', o.createdAt,
                         'updatedAt', o.updatedAt,
 
@@ -69,9 +117,10 @@ const ordersModel = {
 
             FROM orders o
             WHERE o.user_id_fk = ?  -- Fetch orders for the specified user
-            GROUP BY o.user_id_fk;
+            GROUP BY o.user_id_fk ;
     `;
 
+    console.log("in hrere");
         return db.query(q, [userId]);
     },
 
@@ -89,7 +138,10 @@ const ordersModel = {
          *          - `payment_status` (string): Status of the payment.
          *          - `delivery_status` (string): Status of the delivery.
          *          - `payment_mode` (string): Payment method used.
-         *          - `payment_transaction_number` (string | null): Transaction ID (if applicable).
+         *          - `razorpay_payment_id` (string | null): Transaction ID (if applicable).
+         *          
+         * - `razorpay_order_id` (string | null): Razorpay order ID (if applicable).
+
          *          - `createdAt` (Date): Order creation timestamp.
          *          - `updatedAt` (Date): Order update timestamp.
          *          - `ordered_items` (Array): List of ordered items in this order, each containing:
@@ -120,7 +172,8 @@ const ordersModel = {
                         'payment_status', o.payment_status,
                         'delivery_status', o.delivery_status,
                         'payment_mode', o.payment_mode,
-                        'payment_transaction_number', o.payment_transaction_number,
+                        'razorpay_payment_id', o.razorpay_payment_id,
+                        'razorpay_order_id', o.razorpay_order_id,
                         'createdAt', o.createdAt,
                         'updatedAt', o.updatedAt,
 
@@ -164,7 +217,7 @@ const ordersModel = {
      *   - `payment_status` (string): Status of the payment (Pending, Completed, etc.).
      *   - `delivery_status` (string): Status of the order's delivery.
      *   - `payment_mode` (string): Payment method used (ONLINE, CASH).
-     *   - `payment_transaction_number` (string | null): Transaction ID (if applicable).
+     *   - `razorpay_payment_id` (string | null): Transaction ID (if applicable).
      *   - `order_date` (Date): Timestamp when the order was created.
      *   - `last_updated` (Date): Timestamp when the order was last updated.
      *   - `total_amount` (number): Total price of the order (`sum(quantity * price_at_order_time)`).
@@ -188,7 +241,8 @@ const ordersModel = {
                 o.payment_status,
                 o.delivery_status,
                 o.payment_mode,
-                o.payment_transaction_number,
+                o.razorpay_payment_id,
+                o.razorpay_order_id,
                 DATE_FORMAT(o.createdAt, '%d %b %Y, %H:%i:%s') AS order_date,
                 DATE_FORMAT(o.updatedAt, '%d %b %Y, %H:%i:%s') AS last_updated,
 
@@ -243,7 +297,7 @@ module.exports = ordersModel
                     "payment_status": "Completed",
                     "delivery_status": "Delivered",
                     "payment_mode": "ONLINE",
-                    "payment_transaction_number": "TXN1003",
+                    "razorpay_payment_id": "TXN1003",
                     "createdAt": "2025-02-26 12:30:15",
                     "updatedAt": "2025-02-26 12:45:00",
                     "ordered_items": [
@@ -264,7 +318,7 @@ module.exports = ordersModel
                     "payment_status": "Pending",
                     "delivery_status": "Out for Delivery",
                     "payment_mode": "CASH",
-                    "payment_transaction_number": null,
+                    "razorpay_payment_id": null,
                     "createdAt": "2025-02-27 10:15:40",
                     "updatedAt": "2025-02-27 10:25:00",
                     "ordered_items": [

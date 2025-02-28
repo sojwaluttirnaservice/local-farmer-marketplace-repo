@@ -81,9 +81,9 @@
                                 </p>
                                 <p>
                                     <i class="fas fa-user text-gray-500 mr-2"></i>
-                                    <strong>User ID:</strong> <%= orderDetails.user_id_fk || 'N/A'
-                                    %>
+                                    <strong>User:</strong> <%= user.name %>
                                 </p>
+                              
                             </div>
                             <div>
                                 <p>
@@ -130,8 +130,13 @@
                             </p>
                             <p class="text-sm text-gray-600">
                                 <i class="fas fa-barcode text-gray-500 mr-2"></i>
-                                <strong>Transaction ID:</strong> <%=
-                                orderDetails.payment_transaction_number || 'N/A' %>
+                                <strong>Payment ID:</strong> <%=
+                                orderDetails.razorpay_payment_id || 'N/A' %>
+                            </p>
+                            <p class="text-sm text-gray-600">
+                                <i class="fas fa-barcode text-gray-500 mr-2"></i>
+                                <strong>Payment order ID:</strong> <%=
+                                orderDetails.razorpay_order_id || 'N/A' %>
                             </p>
                         </div>
                         <div class="text-center md:text-left">

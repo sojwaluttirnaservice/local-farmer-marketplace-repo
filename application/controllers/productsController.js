@@ -16,7 +16,7 @@ const productsController = {
         let { admin, user, farmer } = session;
 
 
-        
+
 
 
         let [_products, _] = await predefinedProductsModel.getProductsByStockCount();
@@ -87,7 +87,18 @@ const productsController = {
         if (_addResult[0].affectedRows > 0) {
             return sendResponse(res, 201, true, 'Product added successfully');
         }
-    })
+    }),
+
+
+    getProductDetails: asyncHandler(async (req, res) => {
+        let { productId } = req.params;
+
+
+        let [_product] = await predefinedProductsModel.getById(productId);
+
+
+        return sendResponse(res, 200, true, 'Product details fetched successfully', {product: _product[0]});
+    }),
 }
 
 

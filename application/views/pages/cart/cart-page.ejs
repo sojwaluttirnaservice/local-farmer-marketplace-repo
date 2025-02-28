@@ -10,7 +10,6 @@
         <!-- Common links -->
         <%- include("../../common/common-links.ejs")%>
 
-
         <!-- User common links -->
         <%-include("../../common/common-user-links.ejs")%>
 
@@ -22,10 +21,14 @@
 
         <script src="/javascripts/handlers/cart/cartHandler.js" type="module" defer></script>
 
-        <script
-            src="/javascripts/handlers/cart/cartPageHandler.js"
-            type="module"
-            defer></script>
+        <script src="/javascripts/handlers/cart/cartPageHandler.js" type="module" defer></script>
+        <script src="/plugins/razorpay.checkout.min.js"></script>
+
+        <% if(typeof user !== 'undefined' && typeof user != null) {%>
+        <!--  -->
+        <script src="/javascripts/handlers/cart/cartPaymentHandler.js" type="module" defer></script>
+        <!--  -->
+        <% }%>
     </head>
     <body>
         <% if(typeof user !== 'undefined' && typeof user != null) {%>
@@ -52,9 +55,20 @@
                                 </tbody>
                                 <tfoot>
                                     <tr class="border-t">
-                                        <td colspan="3" class="text-right p-4 font-semibold">Total:</td>
+                                        <td colspan="3" class="text-right p-4 font-semibold">
+                                            Total:
+                                        </td>
                                         <td class="p-4" id="cart-total">₹0.00</td>
-                                        <td></td>
+                                        <td>
+                                            <div>
+                                                <button
+                                                    id="checkout-btn"
+                                                    class="px-6 py-2 bg-blue-600 text-white text-md font-semibold rounded-lg shadow-md hover:bg-blue-700 transition duration-300 ease-in-out flex items-center space-x-2">
+                                                    <i class="fas fa-shopping-cart"></i>
+                                                    <span>Checkout</span>
+                                                </button>
+                                            </div>
+                                        </td>
                                     </tr>
                                 </tfoot>
                             </table>

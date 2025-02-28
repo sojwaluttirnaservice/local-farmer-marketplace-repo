@@ -31,32 +31,30 @@
 
         <main>
             <!-- HERO SECTION -->
+            <!-- HERO SECTION -->
             <section
                 class="relative w-full h-[75vh] flex items-center justify-center text-center text-white overflow-hidden">
-                <!-- Background Video -->
-                <div class="absolute top-0 left-0 w-full h-full pointer-events-none">
-                    <video
-                        class="w-full h-[160%]"
-                        src="/home/hero/vegetablemotion.mp4"
-                        type="video/mp4"
-                        controls
-                        autoplay
-                        muted
-                        loop></video>
+                <!-- Background Image -->
+                <div class="absolute top-0 left-0 w-full h-full">
+                    <img
+                        src="https://images.unsplash.com/photo-1518843875459-f738682238a6?q=80&w=1442&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        alt="Organic Groceries"
+                        class="w-full h-full object-cover" />
                 </div>
 
-                <!-- Overlay for Transparency Effect -->
-                <div class="absolute top-0 left-0 w-full h-full bg-green-700 bg-opacity-20"></div>
+                <!-- Gradient Overlay -->
+                <div
+                    class="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-black/60 via-black/30 to-transparent"></div>
 
                 <!-- Hero Content -->
                 <div class="relative z-10 px-6">
-                    <h1 class="text-5xl font-bold">Fresh & Organic Groceries</h1>
-                    <p class="mt-4 text-lg">
+                    <h1 class="text-5xl font-bold drop-shadow-lg">Fresh & Organic Groceries</h1>
+                    <p class="mt-4 text-lg drop-shadow-md">
                         Get the best quality fruits, vegetables, and dairy products.
                     </p>
                     <a
                         href="/products"
-                        class="mt-6 inline-block bg-white text-green-600 font-bold px-6 py-3 rounded-lg hover:bg-gray-200">
+                        class="mt-6 inline-block bg-white text-green-700 font-bold px-6 py-3 rounded-lg hover:bg-gray-200 transition duration-300 shadow-lg">
                         Shop Now
                     </a>
                 </div>

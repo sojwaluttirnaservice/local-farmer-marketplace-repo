@@ -47,8 +47,7 @@ const orderedProductsSchema = sequelize.define("ordered_products", {
         type: Sequelize.INTEGER,
         allowNull: false,
         comment: "Quantity of the products",
-    },
-    
+    }, 
 
     price_at_order_time: {
         type: Sequelize.DECIMAL(10, 2),

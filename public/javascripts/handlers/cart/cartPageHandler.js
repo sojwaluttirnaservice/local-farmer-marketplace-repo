@@ -1,8 +1,5 @@
 
 import toast from "../../utils/toasts.js";
-// import { getCartDataFromLocalStorage } from "./cartHandler.js";
-
-
 import { getCartDataFromLocalStorage, setCartDataToLocalStorage, showCartCountOnUI } from "./cartHandler.js";
 
 $(() => {

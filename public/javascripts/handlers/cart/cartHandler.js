@@ -63,18 +63,65 @@ function updateCartWiseCountOnUI(cartData) {
     });
 }
 
+
+async function handleCheckStock(productId, newQuantity) {
+
+
+    try {
+
+
+        let { data: resData } = await axios.get(`/api/v1/products/p/${productId}`);
+
+        let { success, data, message } = resData;
+        if (!success) {
+            toast.error(message);
+            return false;
+        }
+
+        let { product } = data;
+
+        if (product?.stock_in_quantity < newQuantity) {
+            toast.error("Not enough stock available");
+            return false;
+        }
+        return true;
+    } catch (err) {
+        console.error('Error:', err);
+        toast.error(err?.response?.data?.message);
+        return false;
+    }
+}
+
 // Function to add items to the cart
-function addToCart(item) {
+async function addToCart(item) {
     let cartData = getCartDataFromLocalStorage();
     let existingItem = cartData.find(cartItem => cartItem.predefined_product_id_fk === item.predefined_product_id_fk);
 
     if (!existingItem) {
         if (item.quantity > 0) {
+            let newQuantity = item.quantity;
+
+            let canAdd = handleCheckStock(item.predefined_product_id_fk, newQuantity);
+            console.log(canAdd);
+            if (!canAdd) {
+                return;
+            }
             item.total_price = item.price_at_order_time * item.quantity; // Correct total price calculation
             cartData.push(item);
         }
     } else {
         if (item.quantity > 0) {
+
+            let newQuantity = existingItem.quantity + item.quantity;
+
+            let canAdd = await handleCheckStock(item.predefined_product_id_fk, newQuantity);
+            console.log(canAdd);
+
+
+            if (!canAdd) {
+                return
+            }
+
             existingItem.quantity += item.quantity;
             existingItem.total_price = existingItem.price_at_order_time * existingItem.quantity; // Update total price
         } else if (existingItem.quantity > 0 && item.quantity < 0) {

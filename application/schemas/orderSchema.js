@@ -39,13 +39,26 @@ const orderSchema = sequelize.define("orders", {
     payment_mode: {
         type: Sequelize.ENUM('ONLINE', 'CASH'),
         allowNull: false,
+        defaultValue: 'ONLINE',
         comment: "Payment method used by the user",
     },
 
-    payment_transaction_number: {
+    razorpay_payment_id: {
         type: Sequelize.STRING(255),
         allowNull: true,
-        comment: "Transaction number for the online payment",
+        comment: "Razorpay payment id",
+    },
+
+    razorpay_order_id: {
+        type: Sequelize.STRING(255),
+        allowNull: true,
+        comment: "Razorpay payment id",
+    },
+
+    razorpay_signature: {
+        type: Sequelize.STRING(500),
+        allowNull: true,
+        comment: "Razorpay Signature",
     },
 
     createdAt: {
@@ -53,7 +66,7 @@ const orderSchema = sequelize.define("orders", {
         defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
         comment: "Timestamp when the order was created",
     },
-    
+
     updatedAt: {
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"),

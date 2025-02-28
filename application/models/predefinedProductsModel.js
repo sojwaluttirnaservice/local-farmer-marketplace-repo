@@ -79,6 +79,21 @@ const predefinedProductsModel = {
         return db.query(q);
     },
 
+
+    reduceStockCount: (productId, countDecreasedBy) => {
+        let q = `
+            UPDATE predefined_products 
+            SET stock_in_quantity = 
+                CASE 
+                    WHEN stock_in_quantity >= ? THEN stock_in_quantity - ? 
+                    ELSE stock_in_quantity 
+                END
+            WHERE id = ? AND stock_in_quantity >= ?
+        `;
+
+        return db.query(q, [countDecreasedBy, countDecreasedBy, productId, countDecreasedBy]);
+    },
+
     // Update a predefined product's details
     update: (productData) => {
         let q = `
@@ -164,7 +179,27 @@ const predefinedProductsModel = {
         `;
 
         return db.query(q)
-    }
+    },
+
+    updateMultipleStockCount: (cart) => {
+        if (!cart || cart.length === 0) {
+            return Promise.resolve([]); // Return an empty result if cart is empty
+        }
+
+        let queries = cart.map(item => `
+            UPDATE predefined_products 
+            SET stock_in_quantity = 
+                CASE 
+                    WHEN stock_in_quantity >= ${item.quantity} THEN stock_in_quantity - ${item.quantity} 
+                    ELSE stock_in_quantity 
+                END
+            WHERE id = ${item.predefined_product_id_fk} AND stock_in_quantity >= ${item.quantity};
+        `);
+
+        let finalQuery = queries.join(" "); // Combine multiple update queries
+
+        return db.query(finalQuery);
+    },
 };
 
 module.exports = predefinedProductsModel;
