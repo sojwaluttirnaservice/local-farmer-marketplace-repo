@@ -10,7 +10,7 @@ $(() => {
 
 
             let form = document.getElementById('farmer-signup-form')
-            let farmerData = new FormData()
+            let farmerData = new FormData(form)
 
 
             const { data } = await axios.post('/api/v1/farmers/signup', farmerData)

@@ -11,16 +11,16 @@ const farmersController = {
 
         const _farmersResult = await farmersModel.list();
 
-       
+
 
 
         let renderData = {
             title: 'Farmers List',
             admin,
             farmersList: _farmersResult[0],
-         
+
         }
-    
+
         renderPage(res, 'farmers/farmers-list-page.ejs', renderData)
     }),
 
@@ -44,6 +44,7 @@ const farmersController = {
         const { farmer_name, email, password, mobile, farm_name } = farmerData;
 
         // Check for empty essential fields
+        console.log(farmerData)
         if (!farmer_name || !email || !password || !mobile || !farm_name) {
             return sendResponse(res, 400, false, 'Fill the required fields')
         }
