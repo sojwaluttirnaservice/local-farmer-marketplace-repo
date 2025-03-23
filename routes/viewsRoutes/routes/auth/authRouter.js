@@ -1,15 +1,17 @@
 const getRouter = require("../../../utils/getRouter");
-const viewAuthController = require("../../../../application/controllers/auth/viewAuthController");
+const authViewController = require("../../../../application/controllers/viewsControllers/authViewController");
 
 const authRouter = getRouter();
 
 
 // Routes for pages
 
-authRouter.get('/login', viewAuthController.renderLoginPage)
 
+authRouter.get('/admin', authViewController.renderAdminLoginPage)
 
-authRouter.get('/signup', viewAuthController.renderSignupPage)
+// authRouter.get('/login', authViewController.renderLoginPage)
+
+// authRouter.get('/signup', authViewController.renderSignupPage)
 
 
 module.exports = authRouter;

@@ -1,48 +1,20 @@
-const adminAuthController = require("../../../application/controllers/auth/adminAuthController");
-const candidateAuthController = require("../../../application/controllers/auth/userAuthController");
-const companyAuthController = require("../../../application/controllers/auth/farmerAuthController");
-const { sendResponse } = require("../../../application/utils/responses/ApiResponse");
+const authApiController = require("../../../application/controllers/apiControllers/authApiController");
 const getRouter = require("../../utils/getRouter");
 
-const authApiRouter = getRouter()
+const authApiRouter = getRouter();
+
+// authApiRouter.post('/register/donor')
+
+// authApiRouter.post('/register/recipient')
 
 
-authApiRouter.post("/login", async (req, res) => {
+// for amdin login
+authApiRouter.post('/admin', authApiController.loginAdmin)
 
-    const { role } = req.body
+// authApiRouter.post('/login')
 
-    if (role == 'user') {
-        return candidateAuthController.login(req, res)
-    }
-    // if (role == 'company') {
-    //     return companyAuthController.login(req, res)
-    // }
+// authApiRouter.post('/logout')
 
+// authApiRouter.get('/profile')
 
-    if (role == 'admin') {
-        return adminAuthController.login(req, res)
-    }
-})
-
-authApiRouter.post("/logout", async (req, res) => {
-    let session = req.session;
-
-    
-
-    if (session) {
-        req.session.destroy((err) => {
-            if (err) {
-                console.error("Error destroying session:", err);
-                return res.status(500).send("Error during logout.");
-            }
-            // Now perform the redirect after session is destroyed
-            return sendResponse(res, 200, true, "Logged out successfully")
-        });
-    } else {
-        return sendResponse(res, 200, true, "Logged out successfully")
-    }
-});
-
-
-
-module.exports = authApiRouter;
+module.exports = authApiRouter

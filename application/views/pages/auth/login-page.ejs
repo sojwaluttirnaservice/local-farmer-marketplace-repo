@@ -8,25 +8,84 @@
         <%- include("../../common/common-links.ejs")%>
 
         <!-- Common scripts -->
-        <%-include("../../common/common-scripts.ejs")%>
+        <%- include("../../common/common-scripts.ejs") %>
 
         <script src="/javascripts/handlers/auth/authHandler.js" type="module" defer></script>
+
+        <style>
+            /* Background Image Container */
+            .background-container {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                z-index: -1; /* Behind everything */
+            }
+
+            .background-container img {
+                width: 100%;
+                object-fit: cover; /* Ensures full coverage */
+            }
+
+            /* Dark Overlay */
+            .background-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5); /* Keeps content visible */
+                z-index: -1;
+            }
+
+            /* Centered Content */
+            .content-container {
+                position: relative;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                min-height: 100vh;
+                z-index: 10; /* Above the overlay */
+            }
+
+            /* Glassmorphism Effect */
+            .glassmorphism {
+                background: rgba(255, 255, 255, 0.2);
+                backdrop-filter: blur(15px);
+                -webkit-backdrop-filter: blur(15px);
+                border-radius: 12px;
+                padding: 30px;
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+                border: 1px solid rgba(255, 255, 255, 0.3);
+            }
+        </style>
     </head>
-    <body class="bg-gradient-to-r from-green-400 to-blue-500">
-        <%- include("../../components/navs/outside-navbar.ejs")%>
+
+    <body class="bg-gray-900 text-gray-200">
+        <%- include("../../components/navs/user-navbar.ejs") %>
+
         <main>
-            <div class="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+            <!-- Background Image -->
+            <div class="background-container">
+                <img src="/assets/images/login-bg.jpg" alt="Login Background" />
+            </div>
+
+            <!-- Dark Overlay -->
+            <div class="background-overlay"></div>
+
+            <!-- Content -->
+            <div class="content-container">
                 <div class="sm:mx-auto sm:w-full sm:max-w-md">
-                    <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                        Sign in to your account
+                    <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-100">
+                        Sign in to contribute and reduce waste
                     </h2>
                 </div>
 
                 <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md px-8">
-                    <div class="bg-white py-8 px-4 shadow-lg rounded-lg sm:px-10">
+                    <div class="glassmorphism">
                         <form id="login-form" class="space-y-6">
                             <div>
-                                <label for="email" class="block text-sm font-medium text-gray-700">
+                                <label for="email" class="block text-sm font-medium text-gray-800">
                                     Email
                                 </label>
                                 <div class="mt-1">
@@ -36,15 +95,14 @@
                                         type="email"
                                         autocomplete="email"
                                         required
-                                        value="mahesh@gmail.com"
-                                        class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm" />
+                                        class="appearance-none block w-full px-3 py-2 border border-gray-400 rounded-md shadow-sm placeholder-gray-500 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm bg-white text-gray-900" />
                                 </div>
                             </div>
 
                             <div>
                                 <label
                                     for="password"
-                                    class="block text-sm font-medium text-gray-700">
+                                    class="block text-sm font-medium text-gray-800">
                                     Password
                                 </label>
                                 <div class="mt-1">
@@ -52,36 +110,9 @@
                                         id="password"
                                         name="password"
                                         type="password"
-                                        value="1234"
                                         autocomplete="current-password"
                                         required
-                                        class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm" />
-
-                                    <input type="text" name="role" value="user" hidden />
-                                </div>
-                            </div>
-
-                            <div class="hidden items-center justify-between">
-                                <!-- should have been flex instead -->
-                                <div class="flex items-center">
-                                    <input
-                                        id="remember-me"
-                                        name="remember-me"
-                                        type="checkbox"
-                                        class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded" />
-                                    <label
-                                        for="remember-me"
-                                        class="ml-2 block text-sm text-gray-900">
-                                        Remember me
-                                    </label>
-                                </div>
-
-                                <div class="text-sm">
-                                    <a
-                                        href="#"
-                                        class="font-medium text-green-600 hover:text-green-500">
-                                        Forgot your password?
-                                    </a>
+                                        class="appearance-none block w-full px-3 py-2 border border-gray-400 rounded-md shadow-sm placeholder-gray-500 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm bg-white text-gray-900" />
                                 </div>
                             </div>
 
@@ -95,24 +126,16 @@
                             </div>
 
                             <div>
-                                <h6 class="font-semibold text-gray-700">
-                                    Don’t have an account? Sign up at the link below
+                                <h6 class="font-semibold text-gray-800 text-center">
+                                    Don’t have an account? Join us to help reduce food waste!
                                 </h6>
 
-                                <div class="mt-2">
-                                    <p class="flex justify-center">
-                                        <a
-                                            class="text-green-500 font-bold block text-center hover:underline"
-                                            href="/auth/signup?r=u"
-                                            >Sign Up</a
-                                        >
-                                        <a
-                                            hidden
-                                            class="text-green-500 font-bold hover:underline"
-                                            href="/auth/signup?r=f"
-                                            >For Farmers</a
-                                        >
-                                    </p>
+                                <div class="mt-2 text-center">
+                                    <a
+                                        class="text-green-600 font-bold hover:underline"
+                                        href="/auth/signup">
+                                        Sign Up
+                                    </a>
                                 </div>
                             </div>
                         </form>
@@ -120,7 +143,5 @@
                 </div>
             </div>
         </main>
-
-        <%- include("../../components/footers/outside-footer.ejs")%>
     </body>
 </html>

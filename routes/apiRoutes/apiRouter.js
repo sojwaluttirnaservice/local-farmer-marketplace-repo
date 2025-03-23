@@ -1,36 +1,25 @@
 const getRouter = require("../utils/getRouter");
 const authApiRouter = require("./routes/authApiRouter");
-const cartApiRouter = require("./routes/cartApiRouter");
-const farmersApiRouter = require("./routes/farmersApiRouter");
-const ordersApiRouter = require("./routes/ordersApiRouter");
-const paymentApiRouter = require("./routes/paymentApiRouter");
-const productsApiRouter = require("./routes/productsApiRouter");
-const salesApiRouter = require("./routes/salesApiRouter");
-const usersApiRouter = require("./routes/usersApiRouter");
+const distributionsApiRouter = require("./routes/distributionApiRouter");
+const donationsApiRouter = require("./routes/donationsApiRouter");
+const donorsApiRouter = require("./routes/donorsApiRouter");
+const recipientsApiRouter = require("./routes/recipientsApiRouter");
+const requestsApiRouter = require("./routes/requestsApiRouters");
 
+const apiRouter = getRouter();
 
-const apiRouter = getRouter()
+apiRouter.use("/auth", authApiRouter);
 
+apiRouter.use("/donors", donorsApiRouter);
 
+apiRouter.use("/recipients", recipientsApiRouter);
 
+// apiRouter.use("/admin", );
 
-apiRouter.use('/auth', authApiRouter)
+apiRouter.use("/distribution", distributionsApiRouter);
 
-apiRouter.use('/farmers', farmersApiRouter)
+apiRouter.use("/requests", requestsApiRouter);
 
-apiRouter.use('/products', productsApiRouter)
+apiRouter.use("/donations", donationsApiRouter);
 
-apiRouter.use('/sales', salesApiRouter)
-
-apiRouter.use('/cart', cartApiRouter);
-
-apiRouter.use('/users', usersApiRouter)
-
-apiRouter.use('/orders', ordersApiRouter)
-
-apiRouter.use('/payment', paymentApiRouter)
-
-
-
-
-module.exports = apiRouter
+module.exports = apiRouter;

@@ -1,0 +1,59 @@
+<!-- Donors Page -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Donors List</title>
+
+        <!-- Common links -->
+        <%- include("../../common/common-links.ejs")%> <%-
+        include("../../common/common-admin-links.ejs")%> <%-
+        include("../../common/common-scripts.ejs")%>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <%- include("../../common/common-admin-scripts.ejs")%>
+    </head>
+    <body class="bg-gray-100 text-gray-900">
+        <%- include("../../components/navs/admin-navbar.ejs")%>
+
+        <main class="p-6 max-w-7xl mx-auto">
+            <h1 class="text-3xl font-bold mb-6 text-gray-800">Donors List</h1>
+
+            <div class="bg-white shadow-lg rounded-lg p-6">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-gray-800 text-white">
+                            <th class="p-3">ID</th>
+                            <th class="p-3">Name</th>
+                            <th class="p-3">Email</th>
+                            <th class="p-3">Mobile</th>
+                            <th class="p-3">Food Type</th>
+                            <th class="p-3">Quantity</th>
+                            <th class="p-3">Pickup Address</th>
+                            <th class="p-3">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% donors.forEach(donor => { %>
+                        <tr class="border-b hover:bg-gray-100 transition">
+                            <td class="p-3"><%= donor.id %></td>
+                            <td class="p-3 font-medium text-gray-700"><%= donor.name %></td>
+                            <td class="p-3 text-blue-600 underline"><%= donor.email %></td>
+                            <td class="p-3"><%= donor.mobile || 'N/A' %></td>
+                            <td class="p-3"><%= donor.food_type %></td>
+                            <td class="p-3"><%= donor.quantity %> kg</td>
+                            <td class="p-3"><%= donor.pickup_address %></td>
+                            <td class="p-3">
+                                <span
+                                    class="px-3 py-1 rounded-full text-white <%= donor.status === 'PENDING' ? 'bg-yellow-500' : donor.status === 'PICKED_UP' ? 'bg-green-500' : 'bg-red-500' %>">
+                                    <%= donor.status %>
+                                </span>
+                            </td>
+                        </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </body>
+</html>

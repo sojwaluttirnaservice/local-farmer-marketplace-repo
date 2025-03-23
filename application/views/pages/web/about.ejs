@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title><%= title %></title>
+
+        <%- include("../../common/common-links.ejs")%>
+        <!-- Common user links -->
+        <%-include("../../common/common-user-links.ejs")%>
+        <!-- Common scripts -->
+        <%-include("../../common/common-scripts.ejs")%>
+
+        <!-- <script src="/javascripts/handlers/auth/authHandler.js" type="module" defer></script> -->
+    </head>
+
+    <body class="bg-gray-100 text-gray-800">
+        <%-include ("../../components/navs/user-navbar.ejs") %>
+
+        <main>
+            <!-- Hero Section -->
+            <section
+                class="relative w-full h-[32rem] bg-cover bg-center"
+                style="background-image: url('/assets/images/about-bg.avif')">
+                <div class="absolute inset-0 bg-black/20 flex items-center justify-center">
+                    <h1 class="text-white text-5xl font-bold text-center">
+                        Making Every Meal Count
+                    </h1>
+                </div>
+            </section>
+
+            <!-- About Page -->
+            <section class="py-16 px-6">
+                <div class="max-w-4xl mx-auto bg-white p-10 shadow-xl rounded-lg">
+                    <h2 class="text-4xl font-bold text-green-700 text-center">About Us</h2>
+                    <p class="mt-4 text-gray-600 text-center">
+                        Waste Food Management is dedicated to reducing food waste and redistributing
+                        excess food to those in need. Our mission is to create a sustainable and
+                        hunger-free community by collaborating with individuals, restaurants, and
+                        organizations.
+                    </p>
+                    <div class="mt-8 space-y-6">
+                        <h3 class="text-2xl font-semibold text-gray-800">Our Mission</h3>
+                        <p class="text-gray-600">
+                            We aim to bridge the gap between food surplus and those facing food
+                            insecurity. By collecting, storing, and distributing food, we make sure
+                            no meal goes to waste.
+                        </p>
+                        <h3 class="text-2xl font-semibold text-gray-800">How We Work</h3>
+                        <ul class="list-disc list-inside text-gray-600">
+                            <li>
+                                Partnering with local businesses and individuals to collect excess
+                                food.
+                            </li>
+                            <li>
+                                Ensuring safe storage and timely distribution to NGOs and needy
+                                communities.
+                            </li>
+                            <li>Raising awareness about food sustainability and reducing waste.</li>
+                        </ul>
+                        <h3 class="text-2xl font-semibold text-gray-800">Join Us</h3>
+                        <p class="text-gray-600">
+                            Whether you want to donate food, volunteer, or spread the word, there
+                            are many ways to get involved. Together, we can make a difference!
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-gray-900 text-white text-center py-6 mt-16">
+            <p>&copy; 2025 Waste Food Management. All Rights Reserved.</p>
+        </footer>
+    </body>
+</html>

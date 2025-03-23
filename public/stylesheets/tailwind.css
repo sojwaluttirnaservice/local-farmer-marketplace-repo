@@ -1,8 +1,12 @@
 @import 'tailwindcss';
 
-
 body {
-    position: relative;;
+    position: relative;
+}
+
+nav {
+    position: sticky;
+    top: 0;
 }
 
 @layer components {

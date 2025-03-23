@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title><%= title %></title>
+
+        <%- include("../../common/common-links.ejs")%>
+        <!-- Common user links -->
+        <%-include("../../common/common-user-links.ejs")%>
+        <!-- Common scripts -->
+        <%-include("../../common/common-scripts.ejs")%>
+
+        <!-- <script src="/javascripts/handlers/auth/authHandler.js" type="module" defer></script> -->
+    </head>
+
+    <body class="bg-gray-100 text-gray-800">
+        <%-include ("../../components/navs/user-navbar.ejs") %>
+
+        <main>
+            <!-- Hero Section -->
+            <section
+                class="relative w-full py-16 bg-cover bg-center flex items-center justify-center text-center text-white"
+                style="background-image: url('https://source.unsplash.com/1600x900/?food,help')">
+                <div class="bg-white text-black/90 px-6 py-16 rounded">
+                    <h1 class="text-4xl font-bold">Make a Difference with Your Donation</h1>
+                    <p class="mt-2 text-lg">Your support helps us feed those in need.</p>
+                </div>
+            </section>
+
+            <!-- Donation Section with Authentication Check -->
+            <section
+                class="py-16 px-6 max-w-2xl mx-auto bg-white shadow-lg rounded-lg mt-8 text-center">
+                <h2 class="text-2xl font-bold text-green-700">Donate Now</h2>
+                <p class="mt-4 text-gray-600">
+                    Please
+                    <a href="/login" class="text-green-600 font-semibold hover:underline">log in</a>
+                    or
+                    <a href="/signup" class="text-green-600 font-semibold hover:underline"
+                        >sign up</a
+                    >
+                    to donate.
+                </p>
+                <a
+                    href="/auth/login"
+                    class="mt-6 inline-block bg-green-600 text-white px-6 py-3 rounded shadow hover:bg-green-700"
+                    >Log In</a
+                >
+                <a
+                    href="/auth/signup"
+                    class="mt-6 inline-block bg-gray-600 text-white px-6 py-3 rounded shadow hover:bg-gray-700"
+                    >Sign Up</a
+                >
+            </section>
+
+            <!-- Why Donate? -->
+            <section class="py-16 text-center bg-gray-200 mt-8">
+                <h2 class="text-2xl font-bold text-green-700">Why Your Donation Matters</h2>
+                <p class="mt-4 text-gray-600 max-w-3xl mx-auto">
+                    Every donation helps us reduce food waste and support those in need.
+                </p>
+                <div class="mt-6 max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-white p-6 shadow rounded">
+                        <h3 class="text-xl font-semibold text-green-700">Reduce Food Waste</h3>
+                        <p class="text-gray-600">
+                            Your contribution prevents excess food from going to waste and instead
+                            helps nourish those in need.
+                        </p>
+                    </div>
+                    <div class="bg-white p-6 shadow rounded">
+                        <h3 class="text-xl font-semibold text-green-700">Help the Hungry</h3>
+                        <p class="text-gray-600">
+                            Millions struggle with hunger daily. Your donation provides meals to the
+                            less fortunate.
+                        </p>
+                    </div>
+                    <div class="bg-white p-6 shadow rounded">
+                        <h3 class="text-xl font-semibold text-green-700">Support Communities</h3>
+                        <p class="text-gray-600">
+                            Strong communities are built on kindness. Your generosity makes a direct
+                            impact.
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-gray-900 text-white text-center py-6 mt-16">
+            <p>&copy; 2025 Waste Food Management. All Rights Reserved.</p>
+        </footer>
+    </body>
+</html>
