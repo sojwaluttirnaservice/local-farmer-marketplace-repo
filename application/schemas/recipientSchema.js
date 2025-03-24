@@ -28,6 +28,7 @@ const recipientSchema = sequelize.define("recipients", {
     mobile: {
         type: Sequelize.STRING(15),
         allowNull: true,
+        unique: true,
         comment: "Recipient's contact number",
     },
     address: {
@@ -39,27 +40,6 @@ const recipientSchema = sequelize.define("recipients", {
         type: Sequelize.STRING(255),
         allowNull: true,
         comment: "Name of recipient's organization (if applicable)",
-    },
-    requirement: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        comment: "Required quantity of food (in kg or servings)",
-    },
-    delivery_address: {
-        type: Sequelize.STRING(500),
-        allowNull: false,
-        comment: "Address where food should be delivered",
-    },
-    delivery_time: {
-        type: Sequelize.DATE,
-        allowNull: false,
-        comment: "Preferred delivery time",
-    },
-    status: {
-        type: Sequelize.ENUM("PENDING", "DELIVERED", "CANCELLED"),
-        allowNull: false,
-        defaultValue: "PENDING",
-        comment: "Recipient request status",
     },
     createdAt: {
         type: Sequelize.DATE,
@@ -75,6 +55,10 @@ const recipientSchema = sequelize.define("recipients", {
     timestamps: true,
     tableName: "recipients",
     comment: "Stores recipient details",
+    indexes: [
+        { fields: ["email"], unique: true },
+        { fields: ["mobile"], unique: true }
+    ],
 });
 
 module.exports = recipientSchema;

@@ -20,18 +20,15 @@
             <h1 class="text-4xl font-bold mb-6 text-gray-800">Recipients List</h1>
 
             <div
-                class="bg-white/30 backdrop-blur-lg shadow-xl rounded-xl p-6 border border-gray-200">
-                <table class="w-full text-left border-collapse overflow-hidden rounded-lg">
+                class="overflow-x-scroll w-full bg-white/30 backdrop-blur-lg shadow-xl rounded-xl p-6 border border-gray-200">
+                <table class="text w-full-left border-collapse overflow-hidden rounded-lg">
                     <thead>
-                        <tr class="bg-gray-900 text-white text-lg">
+                        <tr class="bg-gray-900 text-white text-base">
                             <th class="p-4">ID</th>
                             <th class="p-4">Name</th>
                             <th class="p-4">Email</th>
                             <th class="p-4">Mobile</th>
                             <th class="p-4">Organization</th>
-                            <th class="p-4">Requirement</th>
-                            <th class="p-4">Delivery Address</th>
-                            <th class="p-4">Status</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -44,14 +41,6 @@
                             <td class="p-4 text-gray-700"><%= recipient.mobile || 'N/A' %></td>
                             <td class="p-4 text-gray-800">
                                 <%= recipient.organization_name || 'Individual' %>
-                            </td>
-                            <td class="p-4 text-gray-800"><%= recipient.requirement %> kg</td>
-                            <td class="p-4 text-gray-700"><%= recipient.delivery_address %></td>
-                            <td class="p-4">
-                                <span
-                                    class="px-4 py-2 rounded-full text-white text-sm font-semibold <%= recipient.status === 'PENDING' ? 'bg-yellow-500' : recipient.status === 'DELIVERED' ? 'bg-green-500' : 'bg-red-500' %>">
-                                    <%= recipient.status %>
-                                </span>
                             </td>
                         </tr>
                         <% }) %>

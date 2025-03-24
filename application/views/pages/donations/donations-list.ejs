@@ -1,0 +1,71 @@
+<!-- Donations Page -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Donations List</title>
+
+        <!-- Common links -->
+        <%- include("../../common/common-links.ejs")%> <%-
+        include("../../common/common-admin-links.ejs")%> <%-
+        include("../../common/common-scripts.ejs")%>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <%- include("../../common/common-admin-scripts.ejs")%>
+    </head>
+    <body class="bg-gray-100 text-gray-900">
+        <%- include("../../components/navs/admin-navbar.ejs")%>
+
+        <main class="p-6 max-w-7xl mx-auto">
+            <h1 class="text-4xl font-bold mb-6 text-gray-800">Donations List</h1>
+
+            <div class="overflow-x-scroll">
+                <div
+                    class="bg-white/30 backdrop-blur-lg shadow-xl rounded-xl p-6 border border-gray-200">
+                    <table class="text-left border-collapse w-full overflow-hidden rounded-lg">
+                        <thead>
+                            <tr class="bg-gray-900 text-white text-base">
+                                <th class="p-4">ID</th>
+                                <th class="p-4">Donor</th>
+                                <th class="p-4">Contact</th>
+                                <th class="p-4">Food Category</th>
+                                <th class="p-4">Quantity (kg)</th>
+                                <th class="p-4">Expiry Date</th>
+                                <th class="p-4">Pickup Address</th>
+                                <th class="p-4">Pickup Time</th>
+                                <th class="p-4">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% donations.forEach(donation => { %>
+                            <tr
+                                class="border-b border-gray-300 hover:bg-white/50 hover:backdrop-blur-md transition-all duration-200">
+                                <td class="p-4 text-gray-700 font-semibold"><%= donation.id %></td>
+                                <td class="p-4 font-medium text-gray-800">
+                                    <%= donation.donor_name %>
+                                </td>
+                                <td class="p-4 text-gray-700"><%= donation.donor_contact %></td>
+                                <td class="p-4 text-gray-700"><%= donation.food_category %></td>
+                                <td class="p-4 text-gray-800"><%= donation.quantity %> kg</td>
+                                <td class="p-4 text-gray-700">
+                                    <%= new Date(donation.expiry_date).toLocaleDateString() %>
+                                </td>
+                                <td class="p-4 text-gray-700"><%= donation.pickup_address %></td>
+                                <td class="p-4 text-gray-700">
+                                    <%= new Date(donation.pickup_time).toLocaleString() %>
+                                </td>
+                                <td class="p-4">
+                                    <span
+                                        class="px-4 py-2 rounded-full text-white text-sm font-semibold <%= donation.status === 'available' ? 'bg-emerald-500' : 'bg-red-500' %>">
+                                        <%= donation.status %>
+                                    </span>
+                                </td>
+                            </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>

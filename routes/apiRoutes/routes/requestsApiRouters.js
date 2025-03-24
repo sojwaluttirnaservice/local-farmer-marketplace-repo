@@ -1,5 +1,6 @@
+const { updateRequestStatus } = require("../../../application/controllers/apiControllers/requestsApiController");
+const { checkAdminAuth } = require("../../../application/middlewares/authMiddleware");
 const getRouter = require("../../utils/getRouter");
-// const { createRequest, getRequests, updateRequestStatus, deleteRequest } = require("../../controllers/requestController");
 
 const requestsApiRouter = getRouter();
 
@@ -10,7 +11,7 @@ const requestsApiRouter = getRouter();
 // requestsApiRouter.get("/requests", getRequests);
 
 // // ✅ Update request status (approve/reject)
-// requestsApiRouter.put("/requests/:id", updateRequestStatus);
+requestsApiRouter.put("/status", checkAdminAuth, updateRequestStatus);
 
 // // ❌ Delete a request
 // requestsApiRouter.delete("/requests/:id", deleteRequest);

@@ -7,52 +7,67 @@
         <title>Donors List</title>
 
         <!-- Common links -->
-        <%- include("../../common/common-links.ejs")%> <%-
-        include("../../common/common-admin-links.ejs")%> <%-
-        include("../../common/common-scripts.ejs")%>
+        <%- include("../../common/common-links.ejs") %> <%-
+        include("../../common/common-admin-links.ejs") %> <%-
+        include("../../common/common-scripts.ejs") %>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <%- include("../../common/common-admin-scripts.ejs")%>
+        <%- include("../../common/common-admin-scripts.ejs") %>
     </head>
-    <body class="bg-gray-100 text-gray-900">
-        <%- include("../../components/navs/admin-navbar.ejs")%>
+    <body class="bg-gray-50 text-gray-900 font-sans">
+        <%- include("../../components/navs/admin-navbar.ejs") %>
 
         <main class="p-6 max-w-7xl mx-auto">
-            <h1 class="text-3xl font-bold mb-6 text-gray-800">Donors List</h1>
+            <h1 class="text-4xl font-extrabold mb-8 text-gray-800">Donors List</h1>
 
-            <div class="bg-white shadow-lg rounded-lg p-6">
-                <table class="w-full text-left border-collapse">
-                    <thead>
-                        <tr class="bg-gray-800 text-white">
-                            <th class="p-3">ID</th>
-                            <th class="p-3">Name</th>
-                            <th class="p-3">Email</th>
-                            <th class="p-3">Mobile</th>
-                            <th class="p-3">Food Type</th>
-                            <th class="p-3">Quantity</th>
-                            <th class="p-3">Pickup Address</th>
-                            <th class="p-3">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <% donors.forEach(donor => { %>
-                        <tr class="border-b hover:bg-gray-100 transition">
-                            <td class="p-3"><%= donor.id %></td>
-                            <td class="p-3 font-medium text-gray-700"><%= donor.name %></td>
-                            <td class="p-3 text-blue-600 underline"><%= donor.email %></td>
-                            <td class="p-3"><%= donor.mobile || 'N/A' %></td>
-                            <td class="p-3"><%= donor.food_type %></td>
-                            <td class="p-3"><%= donor.quantity %> kg</td>
-                            <td class="p-3"><%= donor.pickup_address %></td>
-                            <td class="p-3">
-                                <span
-                                    class="px-3 py-1 rounded-full text-white <%= donor.status === 'PENDING' ? 'bg-yellow-500' : donor.status === 'PICKED_UP' ? 'bg-green-500' : 'bg-red-500' %>">
-                                    <%= donor.status %>
-                                </span>
-                            </td>
-                        </tr>
-                        <% }) %>
-                    </tbody>
-                </table>
+            <div class="bg-white shadow-xl rounded-lg overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full text-left border-separate border-spacing-0">
+                        <thead>
+                            <tr class="bg-gray-800 text-white text-sm font-medium">
+                                <th class="p-4 text-center">Donor ID</th>
+                                <th class="p-4 text-center">Donor Name</th>
+                                <th class="p-4 text-center">Email</th>
+                                <th class="p-4 text-center">Mobile</th>
+                                <th class="p-4 text-center">Total Donations</th>
+                                <th class="p-4 text-center">Last Pickup Address</th>
+                                <th class="p-4 text-center">Last Donation Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% if (donors.length > 0) { %> <% donors.forEach(donor => { %>
+                            <tr class="border-b hover:bg-gray-100 transition duration-300">
+                                <td class="p-4 text-center text-sm text-gray-800">
+                                    <%= donor.donor_id %>
+                                </td>
+                                <td class="p-4 text-center font-medium text-gray-700">
+                                    <%= donor.name %>
+                                </td>
+                                <td class="p-4 text-center text-blue-600 underline">
+                                    <%= donor.email %>
+                                </td>
+                                <td class="p-4 text-center text-sm">
+                                    <%= donor.mobile || 'N/A' %>
+                                </td>
+                                <td class="p-4 text-center">
+                                    <%= donor.total_donations || 'N/A' %>
+                                </td>
+                                <td class="p-4 text-center">
+                                    <%= donor.last_pickup_address || 'N/A' %>
+                                </td>
+                                <td class="p-4 text-center">
+                                    <%= donor.last_donation_date || 'N/A' %>
+                                </td>
+                            </tr>
+                            <% }) %> <% } else { %>
+                            <tr>
+                                <td colspan="7" class="text-center p-6 text-gray-500">
+                                    No donors found.
+                                </td>
+                            </tr>
+                            <% } %>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </main>
     </body>

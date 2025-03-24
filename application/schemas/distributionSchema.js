@@ -15,6 +15,20 @@ const distributionSchema = sequelize.define("distributions", {
         onDelete: "CASCADE",
         comment: "Foreign key linking to requests",
     },
+    donation_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: { model: "donations", key: "id" },
+        onDelete: "CASCADE",
+        comment: "Foreign key linking to the donation used in this distribution",
+    },
+    food_category_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: { model: "food_categories", key: "id" },
+        onDelete: "CASCADE",
+        comment: "Food category being distributed",
+    },
     assigned_to: {
         type: Sequelize.STRING(255),
         allowNull: true,
@@ -45,6 +59,11 @@ const distributionSchema = sequelize.define("distributions", {
     timestamps: true,
     tableName: "distributions",
     comment: "Tracks distribution of food to recipients",
+    indexes: [
+        { fields: ["request_id"] },
+        { fields: ["donation_id"] },
+        { fields: ["food_category_id"] }, // Index for efficient filtering
+    ],
 });
 
 module.exports = distributionSchema;

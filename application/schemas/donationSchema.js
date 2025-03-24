@@ -11,24 +11,36 @@ const donationSchema = sequelize.define("donations", {
     donor_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: "donors", key: "id" }, // Updated reference
+        references: { model: "donors", key: "id" },
         onDelete: "CASCADE",
         comment: "Foreign key linking to donors",
     },
-    food_type: {
-        type: Sequelize.STRING(255),
+    food_category_id: {
+        type: Sequelize.INTEGER,
         allowNull: false,
-        comment: "Type of food being donated",
+        references: { model: "food_categories", key: "id" },
+        onDelete: "CASCADE",
+        comment: "Foreign key linking to standardized food category",
     },
     quantity: {
-        type: Sequelize.STRING(50),
+        type: Sequelize.INTEGER,
         allowNull: false,
-        comment: "Quantity of food donated",
+        comment: "Quantity of food donated (in kg/units)",
     },
     expiry_date: {
         type: Sequelize.DATE,
         allowNull: false,
         comment: "Expiration date of the donated food",
+    },
+    pickup_address: {
+        type: Sequelize.STRING(500),
+        allowNull: false,
+        comment: "Address for food pickup",
+    },
+    pickup_time: {
+        type: Sequelize.DATE,
+        allowNull: false,
+        comment: "Preferred food pickup time",
     },
     status: {
         type: Sequelize.ENUM("available", "assigned", "completed", "expired"),

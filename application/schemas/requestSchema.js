@@ -11,7 +11,7 @@ const requestSchema = sequelize.define("requests", {
     recipient_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: "recipients", key: "id" }, // Updated reference
+        references: { model: "recipients", key: "id" },
         onDelete: "CASCADE",
         comment: "Foreign key linking to recipients",
     },
@@ -22,6 +22,21 @@ const requestSchema = sequelize.define("requests", {
         onDelete: "CASCADE",
         comment: "Foreign key linking to donations",
     },
+    food_category_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: { model: "food_categories", key: "id" },
+        onDelete: "CASCADE",
+        comment: "Requested food category (ensures correct matching)",
+    },
+
+    quantity: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        defaultValue: 0,
+        comment: 'Quantity in kg'
+    },
+
     status: {
         type: Sequelize.ENUM("pending", "approved", "rejected"),
         allowNull: false,
@@ -42,6 +57,11 @@ const requestSchema = sequelize.define("requests", {
     timestamps: true,
     tableName: "requests",
     comment: "Stores food requests made by recipients",
+    indexes: [
+        { fields: ["recipient_id"] },
+        { fields: ["donation_id"] },
+        { fields: ["food_category_id"] }, // Indexed for better lookup performance
+    ],
 });
 
 module.exports = requestSchema;

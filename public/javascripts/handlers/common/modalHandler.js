@@ -1,14 +1,19 @@
+import toast from "../../utils/toasts";
+
 document.addEventListener("DOMContentLoaded", function () {
 
     document.querySelectorAll("[data-role='open-modal-btn']").forEach((btn) => {
         btn.addEventListener("click", () => {
             let modalId = btn.getAttribute("data-target-modal");
+
             if (modalId) {
                 const modal = document.getElementById(modalId);
                 if (modal) {
                     modal.style.display = "flex"; // Show the modal
                 } else {
-                    console.error(`Modal with ID '${modalId}' not found.`);
+                    let message = `Modal with ID '${modalId}' not found.`
+                    toast.error(message)
+                    console.error(message);
                 }
             }
         });

@@ -35,37 +35,6 @@ const donorSchema = sequelize.define("donors", {
         allowNull: true,
         comment: "Donor's address",
     },
-    food_type: {
-        type: Sequelize.STRING(255),
-        allowNull: false,
-        comment: "Type of food being donated",
-    },
-    quantity: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        comment: "Quantity of food (in kg or servings)",
-    },
-    expiry_date: {
-        type: Sequelize.DATE,
-        allowNull: false,
-        comment: "Food expiry date",
-    },
-    pickup_address: {
-        type: Sequelize.STRING(500),
-        allowNull: false,
-        comment: "Address for food pickup",
-    },
-    pickup_time: {
-        type: Sequelize.DATE,
-        allowNull: false,
-        comment: "Preferred food pickup time",
-    },
-    status: {
-        type: Sequelize.ENUM("PENDING", "PICKED_UP", "CANCELLED"),
-        allowNull: false,
-        defaultValue: "PENDING",
-        comment: "Donation status",
-    },
     createdAt: {
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),

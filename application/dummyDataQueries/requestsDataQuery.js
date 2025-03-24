@@ -1,15 +1,21 @@
 const requestsDataQuery = `
-INSERT INTO requests (recipient_id, donation_id, status, createdAt, updatedAt) VALUES
-(1, 3, 'pending', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(2, 5, 'approved', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(3, 7, 'pending', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(4, 2, 'rejected', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(5, 6, 'approved', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(6, 8, 'pending', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(7, 9, 'approved', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(8, 1, 'pending', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(9, 4, 'rejected', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-(10, 10, 'approved', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO requests (recipient_id, donation_id, food_category_id, status, createdAt, updatedAt) VALUES
+(1, 3, 1, 'pending', NOW(), NOW()),
+(2, 5, 2, 'approved', NOW(), NOW()),
+(3, 8, 3, 'rejected', NOW(), NOW()),
+(4, 10, 4, 'pending', NOW(), NOW()),
+(5, 2, 5, 'approved', NOW(), NOW()),
+(6, 7, 6, 'pending', NOW(), NOW()),
+(7, 4, 7, 'approved', NOW(), NOW()),
+(8, 9, 8, 'pending', NOW(), NOW()),
+(9, 1, 9, 'rejected', NOW(), NOW()),
+(10, 6, 10, 'approved', NOW(), NOW()),
+(11, 12, 11, 'pending', NOW(), NOW()),
+(12, 14, 12, 'approved', NOW(), NOW()),
+(13, 11, 13, 'pending', NOW(), NOW()),
+(14, 13, 14, 'approved', NOW(), NOW()),
+(15, 15, 15, 'rejected', NOW(), NOW());
+
 `;
 
 module.exports = requestsDataQuery;

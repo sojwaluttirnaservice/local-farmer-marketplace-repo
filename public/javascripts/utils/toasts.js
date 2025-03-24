@@ -1,5 +1,5 @@
 const toast = {
-    success: (_message) => {
+    success: (_message, cb = () => { }) => {
         Toastify({
             text: _message,
             duration: 2000,
@@ -8,6 +8,8 @@ const toast = {
                 background: "linear-gradient(to right, #4caf50, #2e7d32)",
             },
         }).showToast(); // Display success message if save is successful
+
+        cb()
     },
 
     error: (_message, style = {}) => {

@@ -8,6 +8,9 @@ const donorsViewController = {
 
         const [donors] = await donorsModel.getAllDonors()
 
+
+        console.log(donors[0])
+
         renderPage(res, 'donors/donors-list', { donors })
     }),
 }

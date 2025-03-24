@@ -8,6 +8,8 @@ const adminSchema = require('../application/schemas/adminSchema');
 const distributionSchema = require('../application/schemas/distributionSchema');
 const requestSchema = require('../application/schemas/requestSchema');
 const donationSchema = require('../application/schemas/donationSchema');
+const foodCategoriesSchema = require('../application/schemas/foodCategoriesSchema');
+
 
 
 const createDatabaseIfNotExists = async () => {
