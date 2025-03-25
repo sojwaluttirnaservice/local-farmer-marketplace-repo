@@ -34,7 +34,7 @@ import toast from "../../utils/toasts.js";
 
 
 
-$(document).on('click', '#login-btn', async function (e) {
+$(document).on('click', '#admin-login-btn', async function (e) {
     e.preventDefault();
 
     const loginDetails = new FormData(document.getElementById('login-form'));
@@ -42,7 +42,7 @@ $(document).on('click', '#login-btn', async function (e) {
     const { _data, _error } = await api.post('/auth/admin', loginDetails)
 
     if (_data) {
-        let { success, message } = _data;
+        let { success, message, data } = _data;
         toast.success(message)
         location.href = '/admin/dashboard'
     }

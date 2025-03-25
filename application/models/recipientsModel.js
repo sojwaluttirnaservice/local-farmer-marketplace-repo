@@ -35,6 +35,10 @@ const recipientsModel = {
         return db.query(q, [id]);
     },
 
+    getByEmail: (email) => {
+        return db.query(`SELECT * from recipients WHERE email = ?`, [email])
+    },
+
     // Get recipient by email
     getRecipientByEmail: (email) => {
         let q = `SELECT 

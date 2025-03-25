@@ -2,13 +2,29 @@ const db = require("../config/db.connect");
 
 const requestsModel = {
     // Create a new request
-    createRequest: (recipient_id, donation_id, food_category_id, status = "pending") => {
+    createRequest: (requestData) => {
         let q = `
             INSERT INTO requests 
-                (recipient_id, donation_id, food_category_id, status, createdAt, updatedAt) 
-            VALUES (?, ?, ?, ?, NOW(), NOW())
+                (
+                    recipient_id, 
+                    donation_id, 
+                    quantity, 
+
+                    food_category_id, 
+                    status, 
+                    createdAt, 
+                    updatedAt
+                ) 
+            VALUES (?, ?, ?, ?, ?, NOW(), NOW())
         `;
-        return db.query(q, [recipient_id, donation_id, food_category_id, status]);
+        return db.query(q,
+            [requestData.recipient_id,
+            requestData.donation_id || null,
+            requestData.quantity,
+            requestData.food_category_id,
+            requestData.status || 'pending'
+            ]
+        );
     },
 
     // Get a request by its ID
@@ -84,9 +100,16 @@ const requestsModel = {
     // Get requests by recipient
     getRequestsByRecipient: (recipient_id) => {
         let q = `
-            SELECT r.id, r.donation_id, r.food_category_id, r.status, r.createdAt, r.updatedAt, 
-                   d.quantity AS donation_quantity, 
-                   fc.category_name AS food_category
+            SELECT r.id, 
+                    r.donation_id, 
+                    r.food_category_id, 
+                    r.status, 
+                    r.createdAt, 
+                    r.updatedAt,
+                    DATE_FORMAT(r.createdAt, '%d %b %Y') AS _createdAt,
+                    d.quantity AS donation_quantity, 
+                    fc.category_name AS food_category,
+                    fc.id AS food_category_id
             FROM requests r
             LEFT JOIN donations d ON r.donation_id = d.id
             LEFT JOIN food_categories fc ON r.food_category_id = fc.id

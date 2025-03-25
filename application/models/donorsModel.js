@@ -2,9 +2,13 @@ const db = require("../config/db.connect");
 
 const donorsModel = {
     // Add a new donor
-    addDonor: (name, email, password, mobile, address) => {
+    addDonor: ({ name, email, password, mobile, address }) => {
         let q = `INSERT INTO donors (name, email, password, mobile, address) VALUES (?, ?, ?, ?, ?)`;
         return db.query(q, [name, email, password, mobile, address]);
+    },
+
+    getByEmail: (email) => {
+        return db.query(`SELECT * from donors WHERE email = ?`, [email])
     },
 
     // Get donor by ID with donation details

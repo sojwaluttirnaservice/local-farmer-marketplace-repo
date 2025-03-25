@@ -2,7 +2,9 @@ const db = require("../config/db.connect");
 
 const donationsModel = {
     // Create a new donation
-    createDonation: (donor_id, food_category_id, quantity, expiry_date, pickup_address, pickup_time, status) => {
+    createDonation: (donationData) => {
+
+        let { donor_id, food_category_id, quantity, expiry_date, pickup_address, pickup_time, status } = donationData
         let q = `
             INSERT INTO donations 
                 (
@@ -16,7 +18,7 @@ const donationsModel = {
                 ) 
             VALUES (?, ?, ?, ?, ?, ?, ?)
         `;
-        return db.query(q, [donor_id, food_category_id, quantity, expiry_date, pickup_address, pickup_time, status]);
+        return db.query(q, [donor_id, food_category_id, quantity, expiry_date, pickup_address, pickup_time, status || 'available']);
     },
 
     // Get donation by ID
@@ -154,11 +156,13 @@ const donationsModel = {
     updateDonationQuantity: (donation_id, quantity) => {
         let q = `
             UPDATE donations 
-            SET quantity = ? 
+            SET quantity = ?, 
+                status = CASE WHEN ? = 0 THEN 'completed' ELSE status END 
             WHERE id = ?
         `;
-        return db.query(q, [quantity, donation_id]);
+        return db.query(q, [quantity, quantity, donation_id]);
     },
+
 
     // Update donation status
     updateDonationStatus: (donation_id, status) => {

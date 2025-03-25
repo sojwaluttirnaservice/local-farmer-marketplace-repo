@@ -11,7 +11,7 @@
         <!-- Common scripts -->
         <%-include("../../common/common-scripts.ejs")%>
 
-        <!-- <script src="/javascripts/handlers/auth/authHandler.js" type="module" defer></script> -->
+        <script src="/javascripts/handlers/auth/authHandler.js" type="module" defer></script>
     </head>
 
     <body class="bg-gray-100 text-gray-800">
@@ -34,9 +34,11 @@
                 <h2 class="text-2xl font-bold text-green-700">Donate Now</h2>
                 <p class="mt-4 text-gray-600">
                     Please
-                    <a href="/login" class="text-green-600 font-semibold hover:underline">log in</a>
+                    <a href="/auth/login" class="text-green-600 font-semibold hover:underline"
+                        >log in</a
+                    >
                     or
-                    <a href="/signup" class="text-green-600 font-semibold hover:underline"
+                    <a href="/auth/signup" class="text-green-600 font-semibold hover:underline"
                         >sign up</a
                     >
                     to donate.

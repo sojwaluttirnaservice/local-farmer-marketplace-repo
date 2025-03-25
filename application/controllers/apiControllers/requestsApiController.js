@@ -6,6 +6,34 @@ const { FAILURE, SUCCESS } = require("../../utils/responses/executionCodes")
 
 const authApiController = {
 
+
+    addRequest: asyncHandler(async (req, res) => {
+        let requestData = req.body
+        let { recipient_id, food_category_id, quantity } = requestData
+
+        // Validate if recipient_id is provided
+        if (!recipient_id) {
+            return sendError(res, 400, FAILURE, 'Recipient id is missing')
+        }
+
+        // Validate if food_category_id is provided
+        if (!food_category_id) {
+            return sendError(res, 400, FAILURE, 'Food category not selected')
+        }
+
+        // Validate if quantity is provided and is a valid number
+        if (!quantity || isNaN(quantity) || quantity <= 0) {
+            return sendError(res, 400, FAILURE, 'Invalid quantity provided')
+        }
+
+
+        const [saveResult] = await requestsModel.createRequest(requestData)
+
+        if (saveResult.affectedRows > 0) {
+            return sendResponse(res, 200, SUCCESS, "Request Created")
+        }
+    }),
+
     updateRequestStatus: asyncHandler(async (req, res) => {
         const { request_id, status, food_category_id, quantity } = req.body;
 

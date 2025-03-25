@@ -39,7 +39,7 @@ const donationSchema = sequelize.define("donations", {
     },
     pickup_time: {
         type: Sequelize.DATE,
-        allowNull: false,
+        allowNull: true,
         comment: "Preferred food pickup time",
     },
     status: {

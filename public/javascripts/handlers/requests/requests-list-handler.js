@@ -17,7 +17,9 @@ $(() => {
 
         if (_data?.success) {
             toast.success(_data.message, () => {
-                location.reload()
+                setTimeout(() => {
+                    location.reload()
+                }, 1000)
             })
         }
     }

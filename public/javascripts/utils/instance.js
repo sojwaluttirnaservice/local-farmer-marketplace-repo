@@ -62,7 +62,7 @@ const api = {
      * @param {string} url - The endpoint URL.
      * @param {object} data - The updated data payload.
      * @param {object} [config={}] - Optional Axios configuration.
-     * @returns {Promise<{ data: any, error: string | null }>} - A promise that resolves with the response data or an error message.
+     * @returns {Promise<{ _data: any, _error: string | null }>} - A promise that resolves with the response data or an error message.
      */
     put: asyncApiHandler(async (url, data, config = {}) => {
         const response = await instance.put(url, data, config);

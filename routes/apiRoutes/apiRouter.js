@@ -14,7 +14,7 @@ apiRouter.use("/donors", donorsApiRouter);
 
 apiRouter.use("/recipients", recipientsApiRouter);
 
-// apiRouter.use("/admin", );
+apiRouter.use("/donations", donationsApiRouter);
 
 apiRouter.use("/distribution", distributionsApiRouter);
 

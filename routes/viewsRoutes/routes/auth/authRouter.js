@@ -9,9 +9,9 @@ const authRouter = getRouter();
 
 authRouter.get('/admin', authViewController.renderAdminLoginPage)
 
-// authRouter.get('/login', authViewController.renderLoginPage)
+authRouter.get('/login', authViewController.renderLoginPage)
 
-// authRouter.get('/signup', authViewController.renderSignupPage)
+authRouter.get('/signup', authViewController.renderSignupPage)
 
 
 module.exports = authRouter;

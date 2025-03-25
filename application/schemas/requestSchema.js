@@ -17,7 +17,7 @@ const requestSchema = sequelize.define("requests", {
     },
     donation_id: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: { model: "donations", key: "id" },
         onDelete: "CASCADE",
         comment: "Foreign key linking to donations",

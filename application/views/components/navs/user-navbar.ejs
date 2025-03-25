@@ -2,11 +2,71 @@
     <div class="py-4">
         <div class="container mx-auto flex justify-between items-center px-6">
             <a href="/" class="text-green-600 text-2xl font-bold">Waste Food</a>
-            <ul class="hidden md:flex space-x-6 text-gray-700 font-medium">
+            <ul class="hidden md:flex items-center space-x-6 text-gray-700 font-medium">
                 <li><a href="/" class="hover:text-green-600">Home</a></li>
                 <li><a href="/about" class="hover:text-green-600">About</a></li>
-                <li><a href="/donate" class="hover:text-green-600">Donate</a></li>
+                <li><a href="/donate" class="hover:text-green-600">Contribute</a></li>
                 <li><a href="/contact" class="hover:text-green-600">Contact</a></li>
+
+                <% if (typeof user !== 'undefined' && user && user.role) { %> <% if (user.role ===
+                'donor') { %>
+
+                <li>
+                    <a href="/donations/add">Add Donation</a>
+                </li>
+                <li>
+                    <a href="/donations/u/<%= user.id %>">Donations</a>
+                </li>
+
+                <li>
+                    <div class="border border-gray-400 rounded-xl px-2 py-1">
+                        <div class="flex items-center gap-2">
+                            <span data-href="/profile"><%= user.name %></span>
+
+                            <button class="logout-btn">
+                                <i class="fa-solid fa-right-from-bracket text-rose-800"></i>
+                            </button>
+                        </div>
+                    </div>
+                </li>
+                <% } %> <% if (user.role === 'recipient') { %>
+
+                <li>
+                    <a href="/requests/add">Add Request</a>
+                </li>
+
+                <li>
+                    <a href="/requests/u/<%= user.id %>">Requests</a>
+                </li>
+
+                <li>
+                    <div class="border border-gray-400 rounded-xl px-2 py-1">
+                        <div class="flex items-center gap-2">
+                            <span data-href="/profile"><%= user.name %></span>
+
+                            <button class="logout-btn">
+                                <i class="fa-solid fa-right-from-bracket text-rose-800"></i>
+                            </button>
+                        </div>
+                    </div>
+                </li>
+                <% } %> <% } else { %>
+                <li>
+                    <a
+                        href="/auth/signup"
+                        class="inline-block px-6 py-1 text-lg font-semibold text-green-800 bg-green-200 rounded-lg shadow-md hover:bg-green-300 hover:text-green-900 focus:outline-none focus:ring-2 focus:ring-green-400 transition duration-300">
+                        Signup
+                    </a>
+                </li>
+                <li>
+                    <a
+                        href="/auth/login"
+                        class="inline-block px-6 py-1 text-lg font-semibold text-blue-800 bg-blue-200 rounded-lg shadow-md hover:bg-blue-300 hover:text-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-400 transition duration-300">
+                        Login
+                    </a>
+                </li>
+
+                <% } %>
             </ul>
             <button class="md:hidden text-gray-700" id="menu-toggle">&#9776;</button>
         </div>

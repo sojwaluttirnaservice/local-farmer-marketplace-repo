@@ -11,8 +11,6 @@ const authApiController = {
 
     loginAdmin: asyncHandler(async (req, res) => {
 
-
-        console.log(req.body)
         const { email, password } = req.body;
 
         if (!email || !password) {
@@ -22,36 +20,44 @@ const authApiController = {
 
         const [existing] = await adminModel.getAdminByEmail(email)
 
-        console.log(existing)
+        // console.log(existing)
 
         if (!existing?.length || existing[0]?.password != password) {
             return sendError(res, 400, FAILURE, 'Invalid credentials')
         }
 
-
-
         let { password: pass, ...admin } = existing[0]
 
-        return sendResponse(res, 200, SUCCESS, 'Login Successful', { admin })
+        admin.role = 'admin'
+        req.session.user = admin
+
+        return sendResponse(res, 200, SUCCESS, 'Login Successful', { user: admin })
 
     }),
 
     registerDonor: asyncHandler(async (req, res) => {
-        const { name, email, password, mobile } = req.body;
+        const { name, email, password, confirm_password, mobile, address } = req.body;
 
-        if (!name || !email || !password || !mobile) {
+        if (!name || !email || !password || !mobile || !address) {
             return sendError(res, 400, FAILURE, "All fields are required");
         }
 
-        const existingDonor = await donorsModel.findOne({ where: { email } });
-        if (existingDonor) {
-            return sendError(res, 400, FAILURE, "Donor already exists");
+        if (password != confirm_password) {
+            return sendError(res, 400, FAILURE, 'Password & Confirm Password not matchin')
+        }
+
+        const [donors] = await donorsModel.getByEmail(email);
+        if (donors?.length) {
+            return sendError(res, 400, FAILURE, `Donor with ${email} already exists`);
         }
 
         // const hashedPassword = await bcrypt.hash(password, 10);
-        const newDonor = await donorsModel.create({ name, email, password: '', mobile });
+        // const newDonor = await donorsModel.create({ name, email, password: '', mobile });
 
-        return sendResponse(res, 201, SUCCESS, "Donor registered successfully", newDonor);
+        const [saveResult] = await donorsModel.addDonor(req.body)
+
+        if (saveResult.affectedRows > 0)
+            return sendResponse(res, 201, SUCCESS, "Donor registered successfully");
     }),
 
     loginDonor: asyncHandler(async (req, res) => {
@@ -61,20 +67,21 @@ const authApiController = {
             return sendError(res, 400, FAILURE, "Email and password are required");
         }
 
-        const donor = await donorsModel.findOne({ where: { email } });
-        if (!donor) {
+        const [donors] = await donorsModel.getByEmail(email)
+        if (!donors?.length) {
             return sendError(res, 401, FAILURE, "Invalid credentials");
         }
 
-        // const isMatch = await bcrypt.compare(password, donor.password);
-        let isMatch = true
+        let { password: pass, ...donor } = donors[0]
+        let isMatch = password == pass
         if (!isMatch) {
             return sendError(res, 401, FAILURE, "Invalid credentials");
         }
+        donor.role = 'donor'
+        // Adding donor to the session in user object with donor role
+        req.session.user = donor
 
-        // const token = jwt.sign({ id: donor.id, email: donor.email }, config.JWT_SECRET, { expiresIn: "1d" });
-
-        return sendResponse(res, 200, SUCCESS, "Login successful",);
+        return sendResponse(res, 200, SUCCESS, "Login successful", { user: donor });
     }),
 
     registerRecipient: asyncHandler(async (req, res) => {
@@ -84,15 +91,18 @@ const authApiController = {
             return sendError(res, 400, FAILURE, "All fields are required");
         }
 
-        const existingRecipient = await recipientsModel.findOne({ where: { email } });
-        if (existingRecipient) {
-            return sendError(res, 400, FAILURE, "Recipient already exists");
+        const [recipients] = await recipientsModel.getByEmail(email);
+        if (recipients?.length) {
+            return sendError(res, 400, FAILURE, `Recipient with ${email} already exists`);
         }
 
         // const hashedPassword = await bcrypt.hash(password, 10);
-        const newRecipient = await recipientsModel.create({ name, email, password: 'hashedPassword', mobile });
+        // const newRecipient = await recipientsModel.create({ name, email, password: 'hashedPassword', mobile });
 
-        return sendResponse(res, 201, SUCCESS, "Recipient registered successfully", newRecipient);
+        const [saveResult] = await recipientsModel.createRecipient(req.body)
+
+        if (saveResult.affectedRows > 0)
+            return sendResponse(res, 201, SUCCESS, "Recipient registered successfully",);
     }),
 
     loginRecipient: asyncHandler(async (req, res) => {
@@ -101,21 +111,23 @@ const authApiController = {
         if (!email || !password) {
             return sendError(res, 400, FAILURE, "Email and password are required");
         }
-
-        const recipient = await recipientsModel.findOne({ where: { email } });
-        if (!recipient) {
+        const [recipients] = await recipientsModel.getByEmail(email)
+        if (!recipients?.length) {
             return sendError(res, 401, FAILURE, "Invalid credentials");
         }
 
-        // const isMatch = await bcrypt.compare(password, recipient.password);
-        let isMatch = true
+        let { password: pass, ...recipient } = recipients[0]
+        let isMatch = password == pass
+
         if (!isMatch) {
             return sendError(res, 401, FAILURE, "Invalid credentials");
         }
 
-        // const token = jwt.sign({ id: recipient.id, email: recipient.email }, config.JWT_SECRET, { expiresIn: "1d" });
+        recipient.role = 'recipient'
+        // Adding donor to the session in user object with donor role
+        req.session.user = recipient
 
-        return sendResponse(res, 200, SUCCESS, "Login successful", {});
+        return sendResponse(res, 200, SUCCESS, "Login successful", { user: recipient });
     }),
 };
 

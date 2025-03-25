@@ -1,37 +1,53 @@
+import { removeItem, storeItem } from "../../utils/common-handler.js";
+import { api } from "../../utils/instance.js";
 import toast from "../../utils/toasts.js";
 
 
 
-const handleLogin = async (loginDetails) => {
-    try {
+const handleLogin = async (e) => {
 
-        const { data } = await axios.post("/api/v1/auth/login", loginDetails);
 
-        console.log(data)
+    e.preventDefault();
 
-        const { success, message } = data
+    const loginDetails = new FormData(document.getElementById('login-form'));
 
-        if (success) {
-            toast.success(message)
+
+    const { _data, _error } = await api.post('/auth/login', loginDetails)
+
+    if (_data.success) {
+        storeItem('user', _data.data.user)
+        toast.success(_data.message, () => {
             setTimeout(() => {
-                window.location.href = loginDetails.get("role") == "user" ? "/" : "/farmers/dashboard"
-            }, 100)
-        } else {
-            toast.error(message)
-        }
-
-    } catch (err) {
-        console.error(err);
-        toast.error(err?.response?.data?.message || "Something went wrong")
+                location.href = '/'
+            }, 1000)
+        })
     }
+
 }
 
 
 
+const handleLogout = async (e) => {
+    e.preventDefault()
 
-$(document).on('click', '#login-btn', function (e) {
-    e.preventDefault();
+    const userResponse = confirm('Are you sure you want to logout?')
 
-    const loginDetails = new FormData(document.getElementById('login-form'));
-    handleLogin(loginDetails)
-})
+    if (userResponse) {
+        const { _data, _error } = await api.post('/auth/logout')
+
+        if (_data.success) {
+            toast.success(_data.message, () => {
+                setTimeout(() => {
+                    removeItem('user')
+                    location.href = '/';
+                })
+            })
+        }
+    }
+}
+
+
+$(document).on('click', '#login-btn', handleLogin)
+
+
+$(document).on('click', '.logout-btn', handleLogout)

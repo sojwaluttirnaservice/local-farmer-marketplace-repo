@@ -64,72 +64,119 @@
                     </h2>
                 </div>
                 <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md px-8">
-                    <div class="glassmorphism">
-                        <form id="signup-form" class="space-y-6">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-800"
-                                    >Full Name</label
-                                >
-                                <input
-                                    type="text"
-                                    name="name"
-                                    required
-                                    class="w-full p-2 border rounded-md"
-                                    placeholder="Enter your full name" />
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-800">Email</label>
-                                <input
-                                    type="email"
-                                    name="email"
-                                    required
-                                    class="w-full p-2 border rounded-md"
-                                    placeholder="Enter your email" />
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-800">Phone</label>
-                                <input
-                                    type="tel"
-                                    name="phone"
-                                    required
-                                    class="w-full p-2 border rounded-md"
-                                    placeholder="Enter your phone number" />
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-800"
-                                    >Address</label
-                                >
-                                <textarea
-                                    name="address"
-                                    rows="2"
-                                    class="w-full p-2 border rounded-md"
-                                    placeholder="Enter your address"></textarea>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-800"
-                                    >Password</label
-                                >
-                                <input
-                                    type="password"
-                                    name="password"
-                                    required
-                                    class="w-full p-2 border rounded-md"
-                                    placeholder="Enter a strong password" />
-                            </div>
-                            <div>
-                                <button
-                                    type="submit"
-                                    class="w-full p-2 bg-green-600 text-white rounded-md hover:bg-green-700">
-                                    Sign Up
-                                </button>
-                            </div>
-                            <div class="text-center">
-                                <p>
-                                    Already have an account?
-                                    <a href="/auth/login" class="text-green-500">Login</a>
-                                </p>
-                            </div>
-                        </form>
+                    <div class="">
+                        <div class="glassmorphism">
+                            <form id="signup-form" class="space-y-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-800"
+                                        >Full Name</label
+                                    >
+                                    <input
+                                        type="text"
+                                        name="name"
+                                        required
+                                        class="w-full p-2 border rounded-md text-black"
+                                        placeholder="Enter your full name" />
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-800"
+                                        >Email</label
+                                    >
+                                    <input
+                                        type="email"
+                                        name="email"
+                                        required
+                                        class="w-full p-2 border rounded-md text-black"
+                                        placeholder="Enter your email" />
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-800"
+                                        >Phone</label
+                                    >
+                                    <input
+                                        type="tel"
+                                        name="mobile"
+                                        required
+                                        maxlength="10"
+                                        class="w-full p-2 border rounded-md text-black"
+                                        placeholder="Enter your phone number" />
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-800"
+                                        >Address</label
+                                    >
+                                    <textarea
+                                        name="address"
+                                        rows="2"
+                                        class="w-full p-2 border rounded-md text-black"
+                                        placeholder="Enter your address"></textarea>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-800"
+                                        >Password</label
+                                    >
+                                    <input
+                                        type="password"
+                                        name="password"
+                                        required
+                                        class="w-full p-2 border rounded-md text-black"
+                                        placeholder="Enter a strong password" />
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-800"
+                                        >Confirm Password</label
+                                    >
+                                    <input
+                                        type="password"
+                                        name="confirm_password"
+                                        required
+                                        class="w-full p-2 border rounded-md text-black"
+                                        placeholder="Enter a strong password" />
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-800"
+                                        >Organization Name (For Recipient - Optional)</label
+                                    >
+                                    <textarea
+                                        type="text"
+                                        name="organization_name"
+                                        required
+                                        class="w-full p-2 border rounded-md text-black"
+                                        placeholder="Enter a Organization Name"></textarea>
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-800"
+                                        >Select Role</label
+                                    >
+                                    <select
+                                        type="role"
+                                        name="role"
+                                        required
+                                        class="w-full p-2 border rounded-md text-black">
+                                        <option value="" selected>--Select--</option>
+                                        <option value="donor">Donor</option>
+                                        <option value="recipient">Recipient</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <button
+                                        type="submit"
+                                        id="signup-btn"
+                                        class="w-full p-2 bg-green-600 text-white rounded-md hover:bg-green-700">
+                                        Sign Up
+                                    </button>
+                                </div>
+                                <div class="text-center">
+                                    <p>
+                                        Already have an account?
+                                        <a href="/auth/login" class="text-green-500">Login</a>
+                                    </p>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

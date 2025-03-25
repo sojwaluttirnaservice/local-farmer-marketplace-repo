@@ -94,6 +94,7 @@
                                         name="email"
                                         type="email"
                                         autocomplete="email"
+                                        value="ramesh.gupta@example.com"
                                         required
                                         class="appearance-none block w-full px-3 py-2 border border-gray-400 rounded-md shadow-sm placeholder-gray-500 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm bg-white text-gray-900" />
                                 </div>
@@ -110,9 +111,30 @@
                                         id="password"
                                         name="password"
                                         type="password"
+                                        value="1234"
                                         autocomplete="current-password"
                                         required
                                         class="appearance-none block w-full px-3 py-2 border border-gray-400 rounded-md shadow-sm placeholder-gray-500 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm bg-white text-gray-900" />
+                                </div>
+                            </div>
+
+                            <div>
+                                <label
+                                    for="password"
+                                    class="block text-sm font-medium text-gray-800">
+                                    Select Role
+                                </label>
+                                <div class="mt-1">
+                                    <select
+                                        type="role"
+                                        name="role"
+                                        required
+                                        class="appearance-none block w-full px-3 py-2 border border-gray-400 rounded-md shadow-sm placeholder-gray-500 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm bg-white text-gray-900" />
+
+                                        <option value="" class="">--Select--</option>
+                                        <option value="donor">Donor</option>
+                                        <option value="recipient">Recipient</option>
+                                    </select>
                                 </div>
                             </div>
 
