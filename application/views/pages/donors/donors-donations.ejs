@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title><%= title %></title>
+
+        <%- include("../../common/common-links.ejs")%>
+        <!-- Common user links -->
+        <%-include("../../common/common-user-links.ejs")%>
+        <!-- Common scripts -->
+        <%-include("../../common/common-scripts.ejs")%>
+
+        <script src="/javascripts/handlers/auth/authHandler.js" type="module" defer></script>
+    </head>
+
+    <body class="bg-gray-100 text-gray-800">
+        <%-include ("../../components/navs/user-navbar.ejs") %>
+
+        <main>
+            <section class="section">
+                <div class="container">
+                    <h1 class="text-3xl mt-2 font-bold text-center text-gray-900 mb-6">
+                        My Donations (Donations: <%= donations.length %>)
+                    </h1>
+
+                    <% if (donations.length === 0) { %>
+                    <p class="text-center text-gray-600">No donations found.</p>
+                    <% } else { %>
+                    <div class="mb-10">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <% donations.forEach(donation => { %>
+                            <div class="bg-white shadow-md rounded-lg p-6">
+                                <h2 class="text-xl font-semibold text-gray-800">
+                                    <%= donation.food_category %>
+                                </h2>
+                                <p class="text-gray-700">
+                                    <strong>Quantity:</strong> <%= donation.quantity %>
+                                </p>
+                                <p class="text-gray-700">
+                                    <strong>Pickup Address:</strong> <%= donation.pickup_address %>
+                                </p>
+                                <p class="text-gray-700">
+                                    <strong>Pickup Time:</strong>
+                                    <%= new Date(donation.pickup_time).toLocaleString("en-IN", {
+                                    dateStyle: "medium", timeStyle: "short" }) %>
+                                </p>
+                                <p class="text-gray-700">
+                                    <strong>Expiry Date:</strong>
+                                    <%= new Date(donation.expiry_date).toLocaleDateString("en-IN")
+                                    %>
+                                </p>
+                                <p class="text-gray-700">
+                                    <strong>Status:</strong>
+                                    <span
+                                        class="<%= donation.status === 'available' ? 'text-green-600' : 'text-red-600' %>">
+                                        <%= donation.status %>
+                                    </span>
+                                </p>
+                            </div>
+                            <% }); %>
+                        </div>
+                    </div>
+                    <% } %>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-gray-900 text-white text-center py-8 mt-20">
+            <p class="text-lg font-medium">
+                &copy; 2025 Waste Food Management. All Rights Reserved.
+            </p>
+        </footer>
+    </body>
+</html>

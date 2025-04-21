@@ -1,0 +1,52 @@
+<!-- Recipients Page -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Recipients List</title>
+
+        <!-- Common links -->
+        <%- include("../../common/common-links.ejs")%> <%-
+        include("../../common/common-admin-links.ejs")%> <%-
+        include("../../common/common-scripts.ejs")%>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <%- include("../../common/common-admin-scripts.ejs")%>
+    </head>
+    <body class="bg-gray-100 text-gray-900">
+        <%- include("../../components/navs/admin-navbar.ejs")%>
+
+        <main class="p-6 max-w-7xl mx-auto">
+            <h1 class="text-4xl font-bold mb-6 text-gray-800">Recipients List</h1>
+
+            <div
+                class="overflow-x-scroll w-full bg-white/30 backdrop-blur-lg shadow-xl rounded-xl p-6 border border-gray-200">
+                <table class="text w-full-left border-collapse overflow-hidden rounded-lg">
+                    <thead>
+                        <tr class="bg-gray-900 text-white text-base">
+                            <th class="p-4">ID</th>
+                            <th class="p-4">Name</th>
+                            <th class="p-4">Email</th>
+                            <th class="p-4">Mobile</th>
+                            <th class="p-4">Organization</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% recipients.forEach(recipient => { %>
+                        <tr
+                            class="border-b border-gray-300 hover:bg-white/50 hover:backdrop-blur-md transition-all duration-200">
+                            <td class="p-4 text-gray-700 font-semibold"><%= recipient.id %></td>
+                            <td class="p-4 font-medium text-gray-800"><%= recipient.name %></td>
+                            <td class="p-4 text-blue-600 underline"><%= recipient.email %></td>
+                            <td class="p-4 text-gray-700"><%= recipient.mobile || 'N/A' %></td>
+                            <td class="p-4 text-gray-800">
+                                <%= recipient.organization_name || 'Individual' %>
+                            </td>
+                        </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </body>
+</html>

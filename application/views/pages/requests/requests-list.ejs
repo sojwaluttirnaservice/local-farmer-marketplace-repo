@@ -1,0 +1,94 @@
+<!-- requests Page -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title><%= title %></title>
+
+        <!-- Common links -->
+        <%- include("../../common/common-links.ejs")%> <%-
+        include("../../common/common-admin-links.ejs")%> <%-
+        include("../../common/common-scripts.ejs")%>
+        <script
+            src="/javascripts/handlers/requests/requests-list-handler.js"
+            type="module"
+            defer></script>
+        <%- include("../../common/common-admin-scripts.ejs")%>
+    </head>
+    <body class="bg-gray-100 text-gray-900">
+        <%- include("../../components/navs/admin-navbar.ejs")%>
+
+        <main class="p-6 max-w-7xl mx-auto">
+            <h1 class="text-4xl font-bold mb-6 text-gray-800">Requests List</h1>
+
+            <div
+                class="overflow-x-scroll bg-white/30 backdrop-blur-lg shadow-xl rounded-xl p-6 border border-gray-200">
+                <table class="text-left border-collapse overflow-hidden rounded-lg">
+                    <thead>
+                        <tr class="bg-gray-900 text-white text-base">
+                            <th class="p-4">ID</th>
+                            <th class="p-4">Recipient Name</th>
+                            <th class="p-4">Email</th>
+                            <th class="p-4">Mobile</th>
+                            <th class="p-4">Organization</th>
+
+                            <th class="p-4">Food Category</th>
+                            <th class="p-4">Quantity (in kg)</th>
+                            <th class="p-4">Delivery Address</th>
+                            <th class="p-4">Status</th>
+                            <th class="p-4">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% requests.forEach(request => { %>
+                        <tr
+                            class="border-b border-gray-300 hover:bg-white/50 hover:backdrop-blur-md transition-all duration-200">
+                            <td class="p-4 text-gray-700 font-semibold"><%= request.id %></td>
+                            <td class="p-4 font-medium text-gray-800">
+                                <%= request.recipient_name %>
+                            </td>
+                            <td class="p-4 text-blue-600 underline"><%= request.email %></td>
+                            <td class="p-4 text-gray-700"><%= request.mobile || 'N/A' %></td>
+                            <td class="p-4 text-gray-800">
+                                <%= request.organization_name || 'Individual' %>
+                            </td>
+                            <td class="p-4 text-gray-700">
+                                <%= request.food_category || 'Not Specified' %>
+                            </td>
+                            <td class="p-4 text-gray-700"><%= request.quantity || '0' %></td>
+                            <td class="p-4 text-gray-700"><%= request.address %></td>
+                            <td class="p-4">
+                                <span
+                                    class="px-4 py-2 rounded-full text-white text-sm font-semibold <%= request.status === 'PENDING' ? 'bg-yellow-500' : request.status === 'DELIVERED' ? 'bg-emerald-500' : 'bg-red-500' %>">
+                                    <%= request.status %>
+                                </span>
+                            </td>
+                            <td class="p-4">
+                                <% if (request.status === 'pending') { %>
+                                <div class="flex items-center justify-center gap-4">
+                                    <button
+                                        data-button="accept-request-btn"
+                                        data-request="<%= JSON.stringify(request) %>"
+                                        class="text-green-600">
+                                        <i class="fa-solid fa-square-check text-3xl"></i>
+                                    </button>
+                                    <button
+                                        data-button="reject-request-btn"
+                                        data-request="<%= JSON.stringify(request) %>"
+                                        class="text-red-800">
+                                        <i class="fa-solid fa-square-xmark text-3xl"></i>
+                                    </button>
+                                </div>
+                                <% } else { %>
+                                <span class="text-gray-500">NA</span>
+                                <% } %>
+                            </td>
+                        </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </body>
+</html>

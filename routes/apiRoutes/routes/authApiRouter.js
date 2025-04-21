@@ -1,48 +1,56 @@
-const adminAuthController = require("../../../application/controllers/auth/adminAuthController");
-const candidateAuthController = require("../../../application/controllers/auth/userAuthController");
-const companyAuthController = require("../../../application/controllers/auth/farmerAuthController");
-const { sendResponse } = require("../../../application/utils/responses/ApiResponse");
+const authApiController = require("../../../application/controllers/apiControllers/authApiController");
+const asyncHandler = require("../../../application/utils/asyncHandler");
+const { sendResponse, sendError } = require("../../../application/utils/responses/ApiResponse");
+const { SUCCESS, FAILURE } = require("../../../application/utils/responses/executionCodes");
 const getRouter = require("../../utils/getRouter");
 
-const authApiRouter = getRouter()
+const authApiRouter = getRouter();
+
+// authApiRouter.post('/register/donor')
+
+// authApiRouter.post('/register/recipient')
+
+authApiRouter.post('/signup', asyncHandler(async (req, res) => {
+
+    let { role } = req.body;
 
 
-authApiRouter.post("/login", async (req, res) => {
+    console.log(req.body)
 
-    const { role } = req.body
-
-    if (role == 'user') {
-        return candidateAuthController.login(req, res)
+    if (role == 'donor') {
+        return authApiController.registerDonor(req, res)
     }
-    // if (role == 'company') {
-    //     return companyAuthController.login(req, res)
-    // }
 
-
-    if (role == 'admin') {
-        return adminAuthController.login(req, res)
+    if (role == 'recipient') {
+        return authApiController.registerRecipient(req, res)
     }
-})
 
-authApiRouter.post("/logout", async (req, res) => {
-    let session = req.session;
+    return sendError(res, 400, FAILURE, 'Select valid role')
+}),)
 
-    
 
-    if (session) {
-        req.session.destroy((err) => {
-            if (err) {
-                console.error("Error destroying session:", err);
-                return res.status(500).send("Error during logout.");
-            }
-            // Now perform the redirect after session is destroyed
-            return sendResponse(res, 200, true, "Logged out successfully")
-        });
-    } else {
-        return sendResponse(res, 200, true, "Logged out successfully")
+// for amdin login
+authApiRouter.post('/admin', authApiController.loginAdmin)
+
+authApiRouter.post('/login', asyncHandler(async (req, res) => {
+    const userDetails = req.body
+    let { role } = userDetails
+    if (role == 'donor') {
+        return authApiController.loginDonor(req, res)
     }
-});
 
+    if (role == 'recipient') {
+        return authApiController.loginRecipient(req, res)
+    }
 
+    return sendError(res, 400, FAILURE, 'Select valid role')
+}),)
 
-module.exports = authApiRouter;
+authApiRouter.post('/logout', asyncHandler(async (req, res) => {
+    req.session.user = null;
+    return sendResponse(res, 200, SUCCESS, "Logged out successfully")
+}),)
+
+// authApiRouter.get('/profile')
+
+module.exports = authApiRouter

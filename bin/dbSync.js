@@ -1,5 +1,6 @@
+
 require("dotenv").config({ path: "./bin/.env" });
-const getSync = require("./getSync");
+const { getSync } = require("./getSync");
 
 // Call this function
 getSync();

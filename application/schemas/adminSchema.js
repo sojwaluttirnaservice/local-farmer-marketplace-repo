@@ -1,61 +1,39 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../config/sequelize");
 
-
-
 const adminSchema = sequelize.define("admins", {
     id: {
-        type: Sequelize.BIGINT,
-        allowNull: false,
-        primaryKey: true,
+        type: Sequelize.INTEGER,
         autoIncrement: true,
+        primaryKey: true,
+        comment: "Unique admin ID",
     },
-
-    username: {
-        type: Sequelize.STRING,
+    email: {
+        type: Sequelize.STRING(255),
+        allowNull: false,
         unique: true,
-        allowNull: false,
-        comment: "Username of the admin"
+        validate: { isEmail: true },
+        comment: "Admin email",
     },
-
     password: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(255),
         allowNull: false,
-        validate: {
-            min: 5,
-            notEmpty: true,
-            notNull: true,
-        },
-        comment: "Password of the admin"
+        comment: "Hashed admin password",
     },
-
-
-    role: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        defaultValue: 'admin',
-        validate: {
-            isIn: [['admin']],
-        },
-        comment: "Role of the admin (admin)"
-    },
-
-
     createdAt: {
         type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-        comment: ""
+        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
+        comment: "Admin account creation timestamp",
     },
-
     updatedAt: {
         type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-        comment: ""
-    }
+        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
+        comment: "Admin account update timestamp",
+    },
 }, {
     timestamps: true,
-    comment: "Table storing the admins"
+    tableName: "admins",
+    comment: "Stores admin details",
 });
 
 module.exports = adminSchema;
-

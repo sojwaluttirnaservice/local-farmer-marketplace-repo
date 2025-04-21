@@ -10,6 +10,13 @@ $(() => {
         const $button = $(e.currentTarget);
         $button.prop("disabled", true);
 
+
+        let userResponse = confirm('Confirm Logout?')
+
+        if (!userResponse) {
+            return
+        }
+
         try {
             const { data } = await axios.post('/api/v1/auth/logout');
             const { success, message } = data;

@@ -1,0 +1,74 @@
+<!-- Donors Page -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Donors List</title>
+
+        <!-- Common links -->
+        <%- include("../../common/common-links.ejs") %> <%-
+        include("../../common/common-admin-links.ejs") %> <%-
+        include("../../common/common-scripts.ejs") %>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <%- include("../../common/common-admin-scripts.ejs") %>
+    </head>
+    <body class="bg-gray-50 text-gray-900 font-sans">
+        <%- include("../../components/navs/admin-navbar.ejs") %>
+
+        <main class="p-6 max-w-7xl mx-auto">
+            <h1 class="text-4xl font-extrabold mb-8 text-gray-800">Donors List</h1>
+
+            <div class="bg-white shadow-xl rounded-lg overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full text-left border-separate border-spacing-0">
+                        <thead>
+                            <tr class="bg-gray-800 text-white text-sm font-medium">
+                                <th class="p-4 text-center">Donor ID</th>
+                                <th class="p-4 text-center">Donor Name</th>
+                                <th class="p-4 text-center">Email</th>
+                                <th class="p-4 text-center">Mobile</th>
+                                <th class="p-4 text-center">Total Donations</th>
+                                <th class="p-4 text-center">Last Pickup Address</th>
+                                <th class="p-4 text-center">Last Donation Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% if (donors.length > 0) { %> <% donors.forEach(donor => { %>
+                            <tr class="border-b hover:bg-gray-100 transition duration-300">
+                                <td class="p-4 text-center text-sm text-gray-800">
+                                    <%= donor.donor_id %>
+                                </td>
+                                <td class="p-4 text-center font-medium text-gray-700">
+                                    <%= donor.name %>
+                                </td>
+                                <td class="p-4 text-center text-blue-600 underline">
+                                    <%= donor.email %>
+                                </td>
+                                <td class="p-4 text-center text-sm">
+                                    <%= donor.mobile || 'N/A' %>
+                                </td>
+                                <td class="p-4 text-center">
+                                    <%= donor.total_donations || 'N/A' %>
+                                </td>
+                                <td class="p-4 text-center">
+                                    <%= donor.last_pickup_address || 'N/A' %>
+                                </td>
+                                <td class="p-4 text-center">
+                                    <%= donor.last_donation_date || 'N/A' %>
+                                </td>
+                            </tr>
+                            <% }) %> <% } else { %>
+                            <tr>
+                                <td colspan="7" class="text-center p-6 text-gray-500">
+                                    No donors found.
+                                </td>
+                            </tr>
+                            <% } %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>
