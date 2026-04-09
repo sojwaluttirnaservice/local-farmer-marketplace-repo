@@ -1,0 +1,207 @@
+====================================================================
+PROJECT BLACK BOOK REPORT CONTENT (EXTENDED)
+Project Title: Local Farmer Marketplace
+====================================================================
+
+DOCUMENT OUTLINE:
+1. Abstract
+2. Introduction
+   2.1 Problem Statement
+   2.2 Objectives of the Project
+3. Literature Review / Existing Systems
+   3.1 Limitations of Existing System
+   3.2 Advantages of Proposed System
+4. Feasibility Study
+   4.1 Technical Feasibility
+   4.2 Economic Feasibility
+   4.3 Operational Feasibility
+5. System Requirements Specification (SRS)
+   5.1 Hardware Requirements
+   5.2 Software Requirements
+   5.3 Functional Requirements
+   5.4 Non-Functional Requirements
+6. System Architecture & Technologies Used
+   6.1 Technology Stack
+   6.2 MVC Architecture Overview
+7. UML / System Design Descriptions
+   7.1 Use Case Descriptions
+   7.2 Data Flow Logic
+8. Detailed Database Design (Data Dictionary)
+9. Security & Authentication Methods
+10. Software Testing Strategies
+11. Future Scope
+12. Conclusion
+
+--------------------------------------------------------------------
+1. ABSTRACT
+--------------------------------------------------------------------
+The "Local Farmer Marketplace" is an integrated digital e-commerce platform designed to bridge the gap between farmers and end consumers. Traditionally, the agricultural supply chain is heavily reliant on middlemen, a structure that significantly reduces the profit margins for farmers and exponentially increases the cost for end buyers. This web-based application bypasses intermediaries, providing a centralized marketplace where farmers can directly supply their produce to the platform, and consumers can seamlessly purchase fresh, locally grown agricultural items like vegetables, fruits, grains, and dairy. 
+
+By leveraging digital commerce, a Node.js/Express.js backend, robust MySQL database modeling, secure Razorpay online payments, and centralized administrative inventory control, this system optimizes supply chain efficiency. It successfully empowers local farmers financially while granting consumers unprecedented access to transparently priced, fresh, and high-quality agrarian goods.
+
+--------------------------------------------------------------------
+2. INTRODUCTION
+--------------------------------------------------------------------
+2.1 Problem Statement:
+In the current agricultural ecosystem, small-scale farmers struggle to access broad consumer markets. The presence of numerous intermediaries (wholesalers, distributors, retailers) forces farmers to sell produce at non-competitive wholesale rates. This often leads to post-harvest losses due to delayed procurement and causes heavily inflated market prices by the time the produce reaches the consumer's plate.
+
+2.2 Objectives:
+- To eliminate middlemen and establish a direct link between producers (farmers) and buyers.
+- To create a secure, user-friendly portal mapping real-time agricultural supply.
+- To facilitate transparent and cashless payments via gateway integrations.
+- To help administrators monitor sales data, track active inventory, and fulfill digital orders efficiently.
+
+--------------------------------------------------------------------
+3. EXISTING VS. PROPOSED SYSTEM
+--------------------------------------------------------------------
+3.1 Limitations of Existing Systems:
+- Physical marketplaces are restricted by geographic boundaries.
+- Total lack of transparency in commission deductions.
+- Cash-heavy interactions leading to accounting and tax discrepancies.
+- Frequent spoilage of perishable goods due to inefficient manual supply chain management.
+
+3.2 Advantages of Proposed System:
+- Geo-independent digital storefront granting 24/7 visibility to farm produce.
+- Automated stock adjustments, preventing overselling.
+- Complete transparency utilizing digital trails for all invoices and orders.
+- Three distinct access portals providing custom interfaces tailored to Admins, Farmers, and Users respectively.
+
+--------------------------------------------------------------------
+4. FEASIBILITY STUDY
+--------------------------------------------------------------------
+Before initiating the development cycle, a preliminary study was conducted to predict the project's viability:
+
+4.1 Technical Feasibility:
+The project uses Open-Source and highly accessible technologies (Node.js, Express, EJS, MySQL, TailwindCSS). These operate smoothly over standard modern browsers on smartphones and terminals without the need for high computational power. Hence, the project is extremely technically feasible.
+
+4.2 Economic Feasibility:
+There are negligible licensing costs as all core technologies (Node, Express, MySQL) are open source. Only deployment, domain routing, and minor Razorpay transaction fees are incurred. The capital needed to develop and launch is low, making it economically sound and highly feasible for a startup/student project scale.
+
+4.3 Operational Feasibility:
+The user interfaces for Farmers and Users have been planned and designed to be minimal and highly responsive. Users with basic digital literacy (using standard E-commerce apps like Amazon or BigBasket) will intuitively understand the layout.
+
+--------------------------------------------------------------------
+5. SYSTEM REQUIREMENTS SPECIFICATION (SRS)
+--------------------------------------------------------------------
+5.1 Hardware Requirements:
+- Processor: Intel Core i3 / AMD Ryzen 3 or above.
+- RAM: Minimum 4 GB (8 GB is highly recommended for backend compilation).
+- Hard Disk: 20 GB free space minimum.
+- Display: Standard VGA monitor, Mobile Screen.
+
+5.2 Software Requirements:
+- Operating System: Multi-OS (Windows 10/11, macOS, standard Linux distros).
+- Server/Runtime Environment: Node.js (v14+).
+- Web Server Framework: Express.js.
+- Database: MySQL Server.
+- Browser Compatibility: Chrome v80+, Firefox, Edge, Safari.
+
+5.3 Functional Requirements:
+- Admin shall be able to add, update, and categorize predefined products (e.g., adding "Potatoes" under "Vegetables").
+- Farmers shall be able to register accounts and submit "Sales" of predefined products into the marketplace.
+- Users shall be able to add goods to a session-based shopping cart.
+- Users shall be able to securely checkout and generate an Order.
+- The system must automatically deduct product stock quantities as orders are placed successfully.
+
+5.4 Non-Functional Requirements:
+- Reliability: Platform must prevent Double Booking of unavailable stock through robust Transaction commits.
+- Performance: Must load pages under 3 seconds using optimized CSS and asset serving.
+- Security: User passwords must be protected; all Razorpay transactions must occur over encrypted HTTP channels, with strict validation for tampered request signatures.
+
+--------------------------------------------------------------------
+6. SYSTEM ARCHITECTURE & TECHNOLOGIES
+--------------------------------------------------------------------
+6.1 MVC Architecture:
+The Application employs the Model-View-Controller framework.
+- Model: Handled by "Sequelize", it maps JavaScript Objects to MySQL Tables, abstracting SQL queries.
+- View: EJS engine rendering Dynamic HTML. TailwindCSS is piped via PostCSS to output responsive CSS.
+- Controller: JavaScript functions intercepting requests, performing algorithmic logic (like cart calculations and payment matching), and firing responses.
+
+6.2 Technology Highlights:
+- express-session: Retains User login status continuously.
+- express-fileupload: Intercepts `multipart/form-data` to easily consume product display images.
+- razorpay pkg: Allows frictionless integration with Indian banking structures for UPI/Card/NetBanking.
+
+--------------------------------------------------------------------
+7. SYSTEM DESIGN GUIDELINES (FOR UML DIAGRAMS)
+--------------------------------------------------------------------
+(Use these descriptions to easily draw your diagrams)
+
+7.1 Use Case Scenarios:
+- Actor (Farmer): Register -> Login -> View Profile -> Submit Supplies (Add Sale) -> View Sale History.
+- Actor (User): Register -> Login -> Browse Categories -> View Cart -> Initiate Razorpay Payment -> Track Order.
+- Actor (Admin): Secure Login -> Manage Farmer Data -> Define Products (Add/Edit) -> View active Consumer Orders -> Inspect Payment Data.
+
+7.2 Data Flow Logic (Level 1 DFD Concept):
+Supply Logic: Farmer Entity -> "Sales Input Form" -> Sales Controller -> [Farmer_Sales DB Table & Predefined_Products Stock Adjust].
+Consumer Logic: User Entity -> "Product Feed" -> "Cart Builder" -> "Checkout API / Razorpay Gateway" -> Orders Controller -> [Orders DB Table & Ordered_Products Table].
+
+--------------------------------------------------------------------
+8. DETAILED DATABASE DESIGN (DATA DICTIONARY)
+--------------------------------------------------------------------
+Table implementations crafted via Sequelize:
+
+1. `users` Table:
+- id (INT, Primary Key)
+- name (VARCHAR)
+- email (VARCHAR, Unique)
+- password (VARCHAR, Encrypted form)
+- mobile (VARCHAR)
+- address (STRING, 500 length)
+- role (ENUM: user), status, user_type(ENUM: Premium, Normal)
+
+2. `farmers` Table:
+- id (INT, Primary Key)
+- farmer_name, email (Unique), password, mobile (VARCHAR)
+- address, farm_name
+- farm_location, farm_size (Float)
+- established_year (INT)
+
+3. `predefined_products` (Marketplace Catalog):
+- id (INT, Primary Key)
+- product_name (VARCHAR)
+- image_name / image_url (VARCHAR, file path mapping)
+- description (TEXT)
+- price_per_unit, selling_price_per_unit (DECIMAL 10,2)
+- category (ENUM: Vegetables, Fruits, Grains, Dairy...)
+- unit_of_measurement (ENUM: Kilogram, Dozen, Liter...)
+- stock_in_quantity (INT)
+
+4. `farmer_sales`:
+- id (INT, Primary)
+- farmer_id_fk, predefined_product_id_fk (INT, Foreign Keys cascading)
+- stock_quantity (FLOAT), sale_amount, price_per_unit_at_transaction (DECIMAL)
+- payment_status (ENUM)
+
+5. `orders` & `ordered_products`:
+- `orders`: Contains user_id, payment_status, delivery_status, razorpay_payment_id, payment_mode.
+- `ordered_products`: Line items connecting `orders.id` -> `predefined_products.id` alongside snapshot details like `quantity` and `price_at_order_time`.
+
+--------------------------------------------------------------------
+9. SECURITY & AUTHENTICATION METHODS
+--------------------------------------------------------------------
+- Routing Guards: Sensitive routes (e.g., adding products) require the `req.session.admin` context, forcibly redirecting non-admins.
+- Database Transactions: Complex multi-query actions (e.g., Creating Order + Logging Items + Updating Stock) are wrapped via `db.beginTransaction()`. If a single step fails, `db.rollback()` resets changes preventing database ghost-states. 
+- Payment Verification: Ensures the signature returning from the Razorpay API closely matches the generated HMAC signature generated server-side.
+
+--------------------------------------------------------------------
+10. SOFTWARE TESTING STRATEGIES
+--------------------------------------------------------------------
+To assure the system operates devoid of errors, multiple testing phases are implemented:
+- Unit Testing: Checking isolated modules. For example, verifying the Cart Logic appropriately multiplies Unit Price by Cart Quantity dynamically without floating-point errors.
+- Integration Testing: Ensuring different parts exchange data flawlessly. Eg. linking Razorpay Payment Success triggers to the automated SQL Stock Deduction functions.
+- UI/UX Testing: Ensuring the EJS + Tailwind grids gracefully collapse into single columns on mobile displays.
+- White-Box Testing: Examining internal logic paths in the Node Controllers to confirm try/catch blocks handle SQL disconnection or Missing Parameter errors gracefully without crashing the server.
+
+--------------------------------------------------------------------
+11. FUTURE SCOPE
+--------------------------------------------------------------------
+- Artificial Intelligence: Applying Machine Learning logic for Product Price Prediction based on previous seasonal datasets and climate conditions.
+- Delivery Management: Dedicated mobile portal for delivery personnel to update real-time 'dispatched' statuses via Google Maps SDK integrations.
+- Multi-Language Ecosystem: Localizing pages text (i18n implementation) prioritizing regional languages like Marathi or Hindi to dramatically lower the digital barrier for farmers.
+
+--------------------------------------------------------------------
+12. CONCLUSION
+--------------------------------------------------------------------
+To conclude, the Local Farmer Marketplace resolves key limitations hampering the present agrarian marketplace. By successfully implementing a digitally secure infrastructure powered by modern web technologies, it replaces inefficient cash-forward intermediaries. Through functional UI flows, rigorous database structuring, and dependable third-party transactional gateways, the platform empowers local farmers to sell intelligently, provides consumers with cost-effective produce, and operates gracefully under centralized administration. It lays down a foundational benchmark for standardizing rural eCommerce models.
+====================================================================
